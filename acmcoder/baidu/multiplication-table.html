@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>乘法表（百度2016实习生真题）</title>
+	<style>
+		.explain {
+			width: 100%;
+			padding: 5px;
+			text-align: left;
+			border-collapse: collapse;
+			border: 1px solid grey;
+		}
+		.explain td {
+			border: 1px solid #d4d4d4;
+			padding: 5px;			
+		}
+		.result {
+			margin: 20px 0;
+		}
+	</style>
+</head>
+<body>
+	<h2>乘法表（百度2016实习生真题）</h2>
+	<h3>题目描述</h3>
+	<p>
+		度度熊和爷爷在玩一个乘法表游戏。乘法表的第i行第j列位置的元素为i*j，并且乘法表下标编号从1开始，比如2 × 3乘法表为
+		<pre>1 2 3</pre>
+		<pre>2 4 6</pre>
+		爷爷十分聪明，对于n*m的乘法表，只要度度熊给出一个数k，爷爷就能立刻告诉度度熊乘法表中元素按照不减顺序排列之后，第k个元素是多少。	
+	</p>
+	<table class="explain">
+		<tbody>
+			<tr>
+				<td>
+					输入<br />输入数据是三个整数：n, m, k (1≤n, m≤5*105, 1≤k≤nm)。
+				</td>
+				<td>
+					样例输入<br />
+					2 3 4
+				</td>
+			</tr>
+			<tr>
+				<td>
+					输出<br />
+					输出n*m乘法表按照不减顺序排列的第k个数。
+				</td>
+				<td>
+					样例输出<br />
+					3
+				</td>
+			</tr>
+			<tr>
+				<td>
+					时间限制<br />
+					C/C++语言：1000MS其它语言：3000MS
+				</td>
+				<td>
+					内存限制<br />
+					C/C++语言：65536KB其它语言：589824KB
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="result">
+		<div class="result-in">
+			<span>输入数据：</span>
+			<input type="text" id="data-input" class="test-data">
+		</div>
+		<div class="result-test">
+			<button id="test-btn" class="btn">测试</button>
+		</div>
+		<div class="result-out">
+			<span>输出结果：</span>
+			<input type="text" id="data-output" class="test-data" readonly="readonly">
+		</div>
+	</div>
+	
+	<script>
+		function generateTable(n, m) {
+			let ret = [];			
+			for (let i = 1; i <= n; i++) {
+				let row = [];
+				for (let j = 1; j <= m; j++) {
+					row.push(i * j);
+				}
+				ret = ret.concat(row);
+			}
+			return ret;
+		}
+		function outKth(n, m, k) {
+			let arr = generateTable(n, m);
+			let temp = arr.sort();
+			return temp[k - 1];
+		}
+		let test_btn = document.getElementById('test-btn');
+		test_btn.addEventListener('click', () => {
+			let data_input = document.getElementById('data-input').value.trim();
+			let arr_input = data_input.split(' ');
+			if(arr_input.length === 3) {
+				arr_input = arr_input.map((item) => {return parseInt(item);});
+				document.getElementById('data-output').value = outKth(arr_input[0], arr_input[1], arr_input[2]);
+			} else {
+				alert("输入数据格式不对，请重新输入！");
+			}	
+		});	
+	</script>
+</body>
+</html>
