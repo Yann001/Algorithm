@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>编号转换（百度2016实习生真题）</title>
+	<link rel="stylesheet" href="../css/common.css">
+</head>
+<body>
+	<h2>编号转换（百度2016实习生真题）</h2>
+	<h3>题目描述</h3>
+	<p>
+		小B最近对电子表格产生了浓厚的兴趣，她觉得电子表格很神奇，功能远比她想象的强大。她正在研究的是单元格的坐标编号，她发现表格单元一般是按列编号的，第1列编号为A，第2列为B，以此类推，第26列为Z。之后是两位字符编号的，第27列编号为AA，第28列为AB，第52列编号为AZ。之后则是三位、四位、五位……字母编号的，规则类似。<br /><br>
+		表格单元所在的行则是按数值从1开始编号的，表格单元名称则是其列编号和行编号的组合，如单元格BB22代表的单元格为54列中第22行的单元格。<br /><br>
+		小B感兴趣的是，编号系统有时也可以采用RxCy的规则，其中x和y为数值，表示单元格位于第x行的有第y列。上述例子中的单元格采用这种编码体系时的名称为R22C54。<br><br>
+		小B希望快速实现两种表示之间的转换，请你帮忙设计程序将一种方式表示的坐标转换为另一种方式。
+	</p>
+	<table class="explain">
+		<tbody>
+			<tr>
+				<td>
+					输入<br />
+					输入的第一行为一个正整数T，表示有T组测试数据（1<=T<=10^5）。随后的T行中，每行为一组测试数据，为一种形式表示的单元格坐标。保证所有的坐标都是正确的，且所有行列坐标值均不超过10^6。
+				</td>
+				<td>
+					样例输入<br />
+					2 <br>
+					R23C55 <br>
+					BC23
+				</td>
+			</tr>
+			<tr>
+				<td>
+					输出<br />
+					对每组测试数据，单独输出一行，为单元格坐标的另一种表示形式。
+				</td>
+				<td>
+					样例输出<br />
+					BC23 <br>
+					R23C55
+				</td>
+			</tr>
+			<tr>
+				<td>
+					时间限制<br />
+					C/C++语言：1000MS其它语言：3000MS
+				</td>
+				<td>
+					内存限制<br />
+					C/C++语言：65536KB其它语言：589824KB
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="result">
+		<div class="result-in">
+			<span>输入数据：</span>
+			<textarea type="text" id="data-input" class="test-data"></textarea>
+		</div>
+		<div class="result-test">
+			<button id="test-btn" class="btn">测试</button>
+		</div>
+		<div class="result-out">
+			<span>输出结果：</span>
+			<textarea type="text" id="data-output" class="test-data" readonly="readonly"></textarea>
+		</div>
+	</div>
+	
+	<script>
+		function checkIsNumber(c) {
+			var regexp = /^[0-9]*$/;
+			return regexp.test(c) ? true : false;
+		}
+		function Convert10(str) {
+			var s = str.toUpperCase();
+			var ret = 0;
+			var arr = s.split("");
+			for (var i = arr.length - 1, j = 1; i >= 0; i--, j *= 26) {
+				if(arr[i] < 'A' || arr[i] > 'Z') return 0;
+				ret += (arr[i].charCodeAt() - 64) * j; 
+			};
+			return ret;
+		}
+		function Convert26(num) {
+			var ret = "";
+			while(num > 0) {
+				var residue = num % 26;
+				if(residue === 0) residue = 26;
+				ret += String.fromCharCode(residue + 64);
+				num = (num - residue) / 26;
+			}
+			return ret.split("").reverse().join("");
+		}
+		function convertRule(str) {
+			var s = str.toUpperCase();
+			var arr = s.split("");
+			var ret = "";
+			if(arr[0] === "R" && checkIsNumber(arr[1])) { // RxCy形式
+				var cIndex = s.indexOf('C');
+				var row = parseInt(s.slice(1, cIndex));
+				var col = parseInt(s.slice(cIndex + 1));
+				ret = Convert26(col) + row;
+			} else { //电子表形式
+				var regexp_num = /[0-9]/g;
+				var regexp_word = /[A-Z]/g;
+				var row = s.match(regexp_num).join("");
+				var col = Convert10(s.match(regexp_word).join(""));
+				ret = "R" + row + "C" + col;
+			}
+			return ret;
+		}
+
+		let test_btn = document.getElementById('test-btn');
+		test_btn.addEventListener('click', () => {
+			let data_input = document.getElementById('data-input').value.trim();
+			document.getElementById('data-output').value = convertRule(data_input);
+		});	
+	</script>
+</body>
+</html>
