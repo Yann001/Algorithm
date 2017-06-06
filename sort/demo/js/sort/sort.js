@@ -30,6 +30,30 @@ define(function () {
     }
     return arr;
   };
+  //二分插入排序，插入排序的改进
+  var binaryInsert = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    var key, left, right, middle;
+    for (var i = 1; i < len; i++) {
+      key = arr[i];
+      left = 0;
+      right = len - 1
+      while (left < right) {
+        middle = Math.floor((left + right) / 2);
+        if (arr[middle] > key) {
+          right = middle - 1;
+        } else {
+          left = middle + 1;
+        }
+      }
+      for ( var j = i - 1; j >= left; j--) {
+        arr[j + 1] = arr[j];
+      }
+      arr[left] = key;
+    }
+    return arr;
+  }
   //直接选择排序
   var directSelect = function (array) {
     var arr = array.slice();
@@ -46,6 +70,7 @@ define(function () {
   return {
     bubble: bubble,
     insertion: insertion,
+    binaryInsert: binaryInsert,
     directSelect: directSelect
   }
 });
