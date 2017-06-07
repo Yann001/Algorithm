@@ -1,11 +1,11 @@
 define(function () {
-  //冒泡排序
+  // 冒泡排序
   var bubble = function (array) {
     //深拷贝数组，不影响原数组
     var arr = array.slice();
     var len = arr.length;
     for (var i = 0; i < len; i++) {
-      for (var j = 0; j < len - 1 - i; j++) {
+      for (var j = 0; j < len - i - 1; j++) {
         if (arr[j] > arr[j + 1]) {
           arr[j] = [arr[j + 1], arr[j + 1] = arr[j]][0];
         }
@@ -13,8 +13,31 @@ define(function () {
     }
     return arr;
   };
-  //插入排序
-  //舞动的排序算法--插入排序http://v.youku.com/v_show/id_XMjU4NTY5MzEy.html
+  // 鸡尾酒排序（双向冒泡排序）
+  var cocktail = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    var tail = len - 1;
+    for (var i = 0; i < tail;) {
+      //将最小数排到最前面
+      for (var j = tail; j > i; j--) {
+        if (arr[j] < arr[j - 1]) {
+          arr[j] = [arr[j - 1], arr[j - 1] = arr[j]][0];
+        }
+      }
+      i++;
+      //将最大数排到最后面
+      for (var k = i; k < tail; k++) {
+        if (arr[j] > arr[j + 1]) {
+          arr[j] = [arr[j + 1], arr[j + 1] = arr[j]][0];
+        }
+      }
+      tail--;
+    }
+    return arr;
+  }
+  // 插入排序
+  // 舞动的排序算法--插入排序http://v.youku.com/v_show/id_XMjU4NTY5MzEy.html
   var insertion = function (array) {
     var arr = array.slice();
     var len = arr.length;
@@ -30,7 +53,7 @@ define(function () {
     }
     return arr;
   };
-  //二分插入排序，插入排序的改进
+  // 二分插入排序，插入排序的改进
   var binaryInsert = function (array) {
     var arr = array.slice();
     var len = arr.length;
@@ -47,30 +70,63 @@ define(function () {
           left = middle + 1;
         }
       }
-      for ( var j = i - 1; j >= left; j--) {
+      for (var j = i - 1; j >= left; j--) {
         arr[j + 1] = arr[j];
       }
       arr[left] = key;
     }
     return arr;
   }
-  //直接选择排序
-  var directSelect = function (array) {
+  // 希尔排序，也称递减增量排序算法，因DL．Shell于1959年提出而得名，是插入排序的一种高速而稳定的改进版本。
+  var shell = function (array) {
     var arr = array.slice();
     var len = arr.length;
-    for (var i = 0; i < len; i++) {
-      for (var j = i; j < len; j++) {
-        if (arr[j] < arr[i]) {
-          arr[i] = [arr[j], arr[j] = arr[i]][0];
+    for (var d = Math.floor(len / 2); d > 0; d = Math.floor(d / 2)) {
+      for (var k = 0; k < d; k++) {
+        //对每组进行插入排序
+        for (var i = k + d; i < len - d; i += d) {
+          var temp = arr[i];
+          var j = i - d;
+          while (j >= 0 && temp < arr[j]) {
+            arr[j + d] = arr[j];
+            j--;
+          }
+          arr[j + d] = temp;
         }
       }
     }
     return arr;
+  }
+  // 选择排序
+  var selection = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    for (var i = 0; i < len - 1; i++) {
+      var minIdx = i;
+      //未排序序列中找出最小值
+      for (var j = i + 1; j < len; j++) {
+        if (arr[j] < arr[minIdx]) {
+          minIdx = j;
+        }
+      }
+      //最小值不等于当前值，则交换
+      if (minIdx != i) {
+        arr[i] = [arr[minIdx], arr[minIdx] = arr[i]][0];
+      }
+    }
+    return arr;
   };
+  // 快速排序
+  var quick = function (array) {
+
+  }
   return {
     bubble: bubble,
+    cocktail: cocktail,
     insertion: insertion,
     binaryInsert: binaryInsert,
-    directSelect: directSelect
+    shell: shell,
+    selection: selection,
+    quick: quick
   }
 });
