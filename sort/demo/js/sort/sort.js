@@ -118,7 +118,45 @@ define(function () {
   };
   // 快速排序
   var quick = function (array) {
-
+    var arr = array.slice();
+    var len = arr.length;
+    sort(0, len - 1);
+    return arr;
+    function sort(left, right) {
+      var i = left;
+      var j = right;
+      if (left < right) {
+        arr[0] = arr[i];
+        do {
+          // 从右向左找第一个小于基数值的位置j
+          while (arr[j] > arr[0] && i < j) {
+            j--;
+          }
+          // 找到了，位置为j
+          if (i < j) {
+            // 将第j个元素置于左端并重置i
+            arr[j] = arr[i];
+            i++;
+          }
+          // 从左向右找第一个大于基数值的位置i
+          while (arr[i] < arr[0] && i < j) {
+            i++;
+          }
+          // 找到了，位置为i
+          if (i < j) {
+            // 将第i个元素置于右端并重置j
+            arr[j] = arr[i];
+            j--;
+          }
+        } while (i != j)
+        // 将基准值放入它最终的位置，本次划分结束
+        arr[i] = arr[0];
+        // 递归左半部
+        sort(left, i - 1);
+        // 递归右半部
+        sort(i + 1, right);
+      }
+    }
   }
   return {
     bubble: bubble,
