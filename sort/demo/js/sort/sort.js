@@ -126,20 +126,20 @@ define(function () {
       var i = left;
       var j = right;
       if (left < right) {
-        arr[0] = arr[i];
+        var base = arr[i];
         do {
           // 从右向左找第一个小于基数值的位置j
-          while (arr[j] > arr[0] && i < j) {
+          while (arr[j] >= base && i < j) {
             j--;
           }
           // 找到了，位置为j
           if (i < j) {
             // 将第j个元素置于左端并重置i
-            arr[j] = arr[i];
+            arr[i] = arr[j];
             i++;
           }
           // 从左向右找第一个大于基数值的位置i
-          while (arr[i] < arr[0] && i < j) {
+          while (arr[i] < base && i < j) {
             i++;
           }
           // 找到了，位置为i
@@ -150,12 +150,60 @@ define(function () {
           }
         } while (i != j)
         // 将基准值放入它最终的位置，本次划分结束
-        arr[i] = arr[0];
+        arr[i] = base;
         // 递归左半部
         sort(left, i - 1);
         // 递归右半部
         sort(i + 1, right);
       }
+    }
+  }
+  // 堆排序
+  var heap = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    buildHeap(arr, len);
+    for (var i = len - 1; i >= 0; i--) {
+      // 堆的删除
+      arr[0] = [arr[i], arr[i] = arr[0]][0];
+      heapAdjust(arr, 0, i);
+    }
+    return arr;
+    // 根据数组建立最大堆
+    function buildHeap (arr, heapSize) {
+      for (var i = (arr.length - 2 ) / 2; i >= 0; i--) {
+        heapAdjust(arr, i, heapSize);
+      }
+    }
+    // 对以节点i为根节点的子树做堆调整
+    function heapAdjust (arr, i, heapSize) {
+      var left = getLeftChild(i);
+      var right = getRightChild(i);
+      var maxIdx;
+      if (left < heapSize && arr[left] > arr[i]) {
+        maxIdx = left;
+      } else {
+        maxIdx = i;
+      }
+      if (right < heapSize && arr[right] > arr[maxIdx]) {
+        maxIdx = right;
+      }
+      if (maxIdx != i) {
+        arr[maxIdx] = [arr[i], arr[i] = arr[maxIdx]][0];
+        heapAdjust(arr, maxIdx, heapSize);
+      }
+    }
+    // 返回左孩子节点索引
+    function getLeftChild (idx) {
+      return 2 * idx + 1;
+    }
+    // 返回右孩子节点索引
+    function getRightChild (idx) {
+      return 2 * idx + 2;
+    }
+    // 返回父节点索引
+    function getParent (idx) {
+      return Math.floor((idx - 1) / 2);
     }
   }
   return {
@@ -165,6 +213,7 @@ define(function () {
     binaryInsert: binaryInsert,
     shell: shell,
     selection: selection,
-    quick: quick
+    quick: quick,
+    heap: heap
   }
 });
