@@ -16,5 +16,6 @@ require(['sort'], function (sort) {
   console.log('6. select sort: ', sort.selection(arr));
   console.log('7. quick sort: ', sort.quick(arr));
   console.log('8. heap sort: ', sort.heap(arr));
+  console.log('9. merge sort: ', sort.merge(arr));
 });
 

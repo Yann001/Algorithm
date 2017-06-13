@@ -28,28 +28,47 @@ define(function () {
       i++;
       //将最大数排到最后面
       for (var k = i; k < tail; k++) {
-        if (arr[j] > arr[j + 1]) {
-          arr[j] = [arr[j + 1], arr[j + 1] = arr[j]][0];
+        if (arr[k] > arr[k + 1]) {
+          arr[k] = [arr[k + 1], arr[k + 1] = arr[k]][0];
         }
       }
       tail--;
     }
     return arr;
-  }
+  };
   // 插入排序
   // 舞动的排序算法--插入排序http://v.youku.com/v_show/id_XMjU4NTY5MzEy.html
   var insertion = function (array) {
     var arr = array.slice();
     var len = arr.length;
-    var temp, i, j;
-    for (i = 0; i < len - 1; i++) {
-      temp = arr[i + 1];
-      j = i;
-      while (j >= 0 && temp < arr[j]) {
-        arr[j + 1] = arr[j];
-        j--;
+    for (var i = 1; i < len; i++) {
+      // 在已排序的数组中找一个合适的位置（一个比待插入的数小的值）
+      for (var j = i - 1; j >= 0; j--) {
+        if (arr[j] < arr[i]) {
+          break;
+        }
       }
-      arr[j + 1] = temp;
+      // 找到了合适为位置
+      if (j != i - 1) {
+        var temp = arr[i];
+        // 将区间j到i-1内的数后移
+        for (var k = i - 1; k > j; k--) {
+          arr[k + 1] = arr[k];
+        }
+        arr[j + 1] = temp;
+      }
+    }
+    return arr;
+  };
+  // 插入排序优化（合并搜索与数据后移，同时进行数据交换）
+  var insertion1 = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    for (var i = 1; i < len; i++) {
+      // 在已排序的数组中找一个合适的位置（一个比待插入的数小的值）
+      for (var j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+        arr[j] = [arr[j + 1], arr[j + 1] = arr[j]][0];
+      }
     }
     return arr;
   };
@@ -76,7 +95,7 @@ define(function () {
       arr[left] = key;
     }
     return arr;
-  }
+  };
   // 希尔排序，也称递减增量排序算法，因DL．Shell于1959年提出而得名，是插入排序的一种高速而稳定的改进版本。
   var shell = function (array) {
     var arr = array.slice();
@@ -96,7 +115,7 @@ define(function () {
       }
     }
     return arr;
-  }
+  };
   // 选择排序
   var selection = function (array) {
     var arr = array.slice();
@@ -157,7 +176,7 @@ define(function () {
         sort(i + 1, right);
       }
     }
-  }
+  };
   // 堆排序
   var heap = function (array) {
     var arr = array.slice();
@@ -170,13 +189,13 @@ define(function () {
     }
     return arr;
     // 根据数组建立最大堆
-    function buildHeap (arr, heapSize) {
-      for (var i = (arr.length - 2 ) / 2; i >= 0; i--) {
+    function buildHeap(arr, heapSize) {
+      for (var i = (arr.length - 2) / 2; i >= 0; i--) {
         heapAdjust(arr, i, heapSize);
       }
     }
     // 对以节点i为根节点的子树做堆调整
-    function heapAdjust (arr, i, heapSize) {
+    function heapAdjust(arr, i, heapSize) {
       var left = getLeftChild(i);
       var right = getRightChild(i);
       var maxIdx;
@@ -194,18 +213,54 @@ define(function () {
       }
     }
     // 返回左孩子节点索引
-    function getLeftChild (idx) {
+    function getLeftChild(idx) {
       return 2 * idx + 1;
     }
     // 返回右孩子节点索引
-    function getRightChild (idx) {
+    function getRightChild(idx) {
       return 2 * idx + 2;
     }
     // 返回父节点索引
-    function getParent (idx) {
+    function getParent(idx) {
       return Math.floor((idx - 1) / 2);
     }
-  }
+  };
+  // 归并排序
+  var merge = function (array) {
+    var arr = array.slice();
+    var len = arr.length, temp = [];
+    mergeSort(arr, 0, len - 1, temp);
+    return arr;
+    function mergeSort(arr, first, last, temp) {
+      if (first < last) {
+        var mid = Math.floor((first + last) / 2);
+        mergeSort(arr, first, mid, temp);
+        mergeSort(arr, mid + 1, last, temp);
+        mergeArray(arr, first, mid, last, temp);
+      }
+    }
+    function mergeArray(arr, first, mid, last, temp) {
+      var i = first, j = mid + 1;
+      var m = mid, l = last;
+      var k = 0;
+      while (i <= m && j <= l) {
+        if (arr[i] <= arr[j]) {
+          temp[k++] = arr[i++];
+        } else {
+          temp[k++] = arr[j++]
+        }
+      }
+      while (i <= m) {
+        temp[k++] = arr[i++];
+      }
+      while (j <= l) {
+        temp[k++] = arr[j++];
+      }
+      for (i = 0; i < k; i++) {
+        arr[first + i] = temp[i];
+      }
+    }
+  };
   return {
     bubble: bubble,
     cocktail: cocktail,
@@ -214,6 +269,7 @@ define(function () {
     shell: shell,
     selection: selection,
     quick: quick,
-    heap: heap
-  }
+    heap: heap,
+    merge, merge
+  };
 });
