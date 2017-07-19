@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>牛客网zuochengyun直播</title>
+</head>
+
+<body>
+  <script>
+    function win1() {
+      //对数器测试
+    }
+    function f(arr, i, j) {
+      if (i == j) {
+        return arr[i];
+      }
+      return Math.max(s(arr, i, j - 1), s(arr, i + 1, j));
+    }
+    function s(arr, i, j) {
+      if (i == j) {
+        return 0;
+      }
+      return Math.max(f(arr, i, j - 1), f(arr, i + 1, j));
+    }
+  </script>
+</body>
+
+</html>
