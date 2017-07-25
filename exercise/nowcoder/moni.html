@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var isDNA = function (s) {
+      switch (s) {
+        case 'A':
+          return { isDNA: true, next: 'T' };
+        case 'T':
+          return { isDNA: true, next: 'C' };
+        case 'C':
+          return { isDNA: true, next: 'G' };
+        case 'G':
+          return { isDNA: true, next: '' };
+        default:
+          return { isDNA: false, next: 'A' }
+      }
+    }
+    var findLongest = function (arr) {
+      var len = arr.length;
+      var left = 0, right = 0;
+      var set = new Set();
+      for (var i = 0; i < len; i++) {
+        if (isDNA(arr[i]).isDNA) {
+          set.add(1)
+          if (arr[i + 1] === isDNA(arr[i]).next) {
+            set.add(2)
+            if (arr[i + 2] === isDNA(arr[i + 1]).next) {
+              set.add(3)
+              if (arr[i + 3] === isDNA(arr[i + 2]).next) {
+                set.add(4)
+              }
+            }
+          }
+        }
+      }
+      return Math.max(...set);
+    }
+    console.log(findLongest('ATBCBDACER'.split('')))
+
+    var isEvenString = function (arr) {
+      var len = arr.length;
+      if (len % 2 !== 0) {
+        return false;
+      }
+      var str = arr.join('');
+      if (str.substring(0, len / 2) === str.substring(len / 2)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    var findEven = function (arr) {
+      arr.pop();
+      var len = arr.length;
+      if (len < 3) {
+        return 0;
+      }
+      for (var i = len; i > 0; i--) {
+        if(isEvenString(arr)) {
+          return arr.length;
+        } else {
+          arr.pop();
+        }
+      }
+      return 0;
+    }
+    console.log(findEven('abaababaab'.split('')))
+  </script>
+</body>
+
+</html>
