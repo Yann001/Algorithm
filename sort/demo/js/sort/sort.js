@@ -36,27 +36,24 @@ define(function () {
     }
     return arr;
   };
-  // 插入排序
   // 舞动的排序算法--插入排序http://v.youku.com/v_show/id_XMjU4NTY5MzEy.html
+  /**
+   * 插入排序，minT：a*n+b O(n)，maxT：a*n^2+b*n+c O(n^2)
+   * @param {array} array 
+   */
   var insertion = function (array) {
     var arr = array.slice();
     var len = arr.length;
     for (var i = 1; i < len; i++) {
+      var j = i - 1, key = arr[i];
       // 在已排序的数组中找一个合适的位置（一个比待插入的数小的值）
-      for (var j = i - 1; j >= 0; j--) {
-        if (arr[j] < arr[i]) {
-          break;
-        }
+      while(j >= 0 && arr[j] > key) {
+        // 如果值比key大，则将其后移一位
+        arr[j + 1] = arr[j];
+        j--;
       }
-      // 找到了合适为位置
-      if (j != i - 1) {
-        var temp = arr[i];
-        // 将区间j到i-1内的数后移
-        for (var k = i - 1; k > j; k--) {
-          arr[k + 1] = arr[k];
-        }
-        arr[j + 1] = temp;
-      }
+      // 将key放置在正确位置
+      arr[j + 1] = key;
     }
     return arr;
   };
@@ -228,21 +225,20 @@ define(function () {
   // 归并排序
   var merge = function (array) {
     var arr = array.slice();
-    var len = arr.length, temp = [];
-    mergeSort(arr, 0, len - 1, temp);
+    mergeSort(arr, 0, arr.length - 1);
     return arr;
-    function mergeSort(arr, first, last, temp) {
+    function mergeSort(arr, first, last) {
       if (first < last) {
         var mid = Math.floor((first + last) / 2);
-        mergeSort(arr, first, mid, temp);
-        mergeSort(arr, mid + 1, last, temp);
-        mergeArray(arr, first, mid, last, temp);
+        mergeSort(arr, first, mid);
+        mergeSort(arr, mid + 1, last);
+        mergeArray(arr, first, mid, last);
       }
     }
-    function mergeArray(arr, first, mid, last, temp) {
+    function mergeArray(arr, first, mid, last) {
       var i = first, j = mid + 1;
       var m = mid, l = last;
-      var k = 0;
+      var temp = [], k = 0;
       while (i <= m && j <= l) {
         if (arr[i] <= arr[j]) {
           temp[k++] = arr[i++];
