@@ -10,17 +10,51 @@
 </head>
 
 <body>
+  <h1>打开控制台查看</h1>
   <script>
     require(['often'], function (often) {
+      // 和最大子数组问题
       var arr1 = [2, 3, 4, -5, 6, 7, -2, -8, 3, -10, -6, -3, 1, 5];
       var arr2 = [-2, 3, -4, 5, -6, 7, -2, -8, -3, 10, -6, 20, 1, 5];
       var arr3 = [13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7];
-      console.log('input1: ',arr1);
-      console.log('output1: ', often.findMaxSubArr(arr1));
-      console.log('input2: ',arr2);
-      console.log('output2: ', often.findMaxSubArr(arr2));
-      console.log('input3: ',arr3);
-      console.log('output3: ', often.findMaxSubArr(arr3));
+      console.log('和最大子数组问题: ');
+      console.log('input1: ', arr1);
+      console.log('output1: ', often.findMaxSumSubArr(arr1));
+      console.log('input2: ', arr2);
+      console.log('output2: ', often.findMaxSumSubArr(arr2));
+      console.log('input3: ', arr3);
+      console.log('output3: ', often.findMaxSumSubArr(arr3));
+
+      // 钢条分割问题
+      var prices = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30];
+      console.log('钢条分割问题: ');
+      console.log('input prices: ', prices);
+      console.log('steel length: ', 4);
+      console.error('method1: ', often.cutSteel.method1(prices, 4));
+      if (confirm('该算法运行时间将随n增加呈指数增长，n=5了，是否继续？')) {
+        console.log('steel length: ', 5);
+        console.log(often.cutSteel.method1(prices, 5));
+        if (confirm('该算法运行时间将随n增加呈指数增长，n=8了，是否继续？')) {
+          console.log('steel length: ', 8);
+          console.log(often.cutSteel.method1(prices, 8));
+          if (confirm('该算法运行时间将随n增加呈指数增长，n=9')) {
+            console.log('steel length: ', 9);
+            console.log(often.cutSteel.method1(prices, 9));
+          }
+        }
+      }
+      console.error('method2: ', often.cutSteel.method2(prices, 4));
+      console.log('method3: ', often.cutSteel.method3(prices, 1));
+      console.log('method3: ', often.cutSteel.method3(prices, 2));
+      console.log('method3: ', often.cutSteel.method3(prices, 3));
+      console.log('method3: ', often.cutSteel.method3(prices, 4));
+      console.log('method3: ', often.cutSteel.method3(prices, 5));
+      console.log('method3: ', often.cutSteel.method3(prices, 6));
+      console.log('method3: ', often.cutSteel.method3(prices, 7));
+      console.log('method3: ', often.cutSteel.method3(prices, 8));
+      console.log('method3: ', often.cutSteel.method3(prices, 9));
+      console.log('method3: ', often.cutSteel.method3(prices, 10));
+      console.log('method3+ext-> method4: ', often.cutSteel.method4(prices, 10));
     })
   </script>
 </body>
