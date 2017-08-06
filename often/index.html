@@ -24,25 +24,28 @@
       console.log('output2: ', often.findMaxSumSubArr(arr2));
       console.log('input3: ', arr3);
       console.log('output3: ', often.findMaxSumSubArr(arr3));
-
+    });
+  </script>
+  <script>
+    require(['often'], function (often) {
       // 钢条分割问题
       var prices = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30];
       console.log('钢条分割问题: ');
       console.log('input prices: ', prices);
       console.log('steel length: ', 4);
       console.error('method1: ', often.cutSteel.method1(prices, 4));
-      if (confirm('该算法运行时间将随n增加呈指数增长，n=5了，是否继续？')) {
-        console.log('steel length: ', 5);
-        console.log(often.cutSteel.method1(prices, 5));
-        if (confirm('该算法运行时间将随n增加呈指数增长，n=8了，是否继续？')) {
-          console.log('steel length: ', 8);
-          console.log(often.cutSteel.method1(prices, 8));
-          if (confirm('该算法运行时间将随n增加呈指数增长，n=9')) {
-            console.log('steel length: ', 9);
-            console.log(often.cutSteel.method1(prices, 9));
-          }
-        }
-      }
+      // if (confirm('该算法运行时间将随n增加呈指数增长，n=5了，是否继续？')) {
+      //   console.log('steel length: ', 5);
+      //   console.log(often.cutSteel.method1(prices, 5));
+      //   if (confirm('该算法运行时间将随n增加呈指数增长，n=8了，是否继续？')) {
+      //     console.log('steel length: ', 8);
+      //     console.log(often.cutSteel.method1(prices, 8));
+      //     if (confirm('该算法运行时间将随n增加呈指数增长，n=9')) {
+      //       console.log('steel length: ', 9);
+      //       console.log(often.cutSteel.method1(prices, 9));
+      //     }
+      //   }
+      // }
       console.error('method2: ', often.cutSteel.method2(prices, 4));
       console.log('method3: ', often.cutSteel.method3(prices, 1));
       console.log('method3: ', often.cutSteel.method3(prices, 2));
@@ -55,7 +58,20 @@
       console.log('method3: ', often.cutSteel.method3(prices, 9));
       console.log('method3: ', often.cutSteel.method3(prices, 10));
       console.log('method3+ext-> method4: ', often.cutSteel.method4(prices, 10));
-    })
+    });
+  </script>
+  <script>
+    require(['often'], function (often) {
+      // 最长公共子序列问题
+      var X = ['A', 'B', 'C', 'B', 'D', 'A', 'B'],
+        Y = ['B', 'D', 'C', 'A', 'B', 'A'];
+      console.log('sequence A: ', X);
+      console.log('sequence B: ', Y);
+      var r = often.LCS.LCSLength(X, Y);
+      console.log('LCS length: ', r);
+      console.log(X,Y)
+      console.log('LCS: ', often.LCS.getLCS(r[1], X, X.length, Y.length));
+    });
   </script>
 </body>
 

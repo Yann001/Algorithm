@@ -120,8 +120,69 @@ define(function () {
 
   }
 
+  /**
+   * @description 最长公共子序列问题：
+   * 给出两个序列X=[x1, x2, ..., xm]和Y[y1, y2, ..., yn]
+   * 求最长公共子序列C = [ci, ..., cj]
+   */
+  var LCS = {
+    /**
+     * 求公共子序列长度
+     * @param {array} X 序列X
+     * @param {array} Y 序列Y
+     * @return {array} [0]：表中数值为对应最长子序列长度，[1]：子问题最优解指向
+     */
+    LCSLength: function (X, Y) {
+      var m = X.length,
+        n = Y.length;
+      var c = [[]], b = [[]];
+      // 初始化[m+1][n+1]的二维数组，且第一行第一列值为0
+      for (var i = 0; i <= m; i++) {
+        c[i] = [0];
+        b[i] = [0];
+      }
+      for (var j = 1; j <= n; j++) {
+        c[0][j] = 0;
+        b[0][j] = 0;
+      }
+      // 递推求后续每一项值
+      for (var i = 1; i <= m; i++) {
+        for (var j = 1; j <= n; j++) {
+          if (X[i] == Y[j]) {
+            c[i][j] = c[i - 1][j - 1] + 1;
+            b[i][j] = '↖'; // 子问题最优解指向
+          } else if (c[i - 1][j] >= c[i][j - 1]) {
+            c[i][j] = c[i - 1][j];
+            b[i][j] = '←'; // 子问题最优解指向
+          } else {
+            c[i][j] = c[i][j - 1];
+            b[i][j] = '↑'; // 子问题最优解指向
+          }
+        }
+      }
+      return [c, b];
+    },
+    getLCS: function (b, X, i, j) {
+      var ret = [];
+      if (i == 0 || j == 0) {
+        return;
+      }
+      if (b[i][j] == '↖') {
+        this.getLCS(b, X, i - 1, j - 1);
+        console.log(X[i]);
+        ret.push(X[i]);
+      } else if (b[i][j] == '↑') {
+        this.getLCS(b, X, i, j - 1);
+      } else {
+        this.getLCS(b, X, i - 1, j);
+      }
+      return ret;
+    }
+  }
+
   return {
     findMaxSumSubArr: findMaxSumSubArr,
     cutSteel: cutSteel,
+    LCS: LCS,
   }
 })
