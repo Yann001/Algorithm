@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../lib/require.js"></script>
+  <title>Base Data Structure</title>
+</head>
+<body>
+  <script>
+    require(['base'], function (base) {
+      var stack = new base.Stack([1,2,3]);
+      // 
+      console.log(stack.empty());
+      stack.push('123');
+      console.log(stack.empty());
+      stack.pop();
+      console.log(stack.empty());      
+    })
+  </script>
+</body>
+</html>
