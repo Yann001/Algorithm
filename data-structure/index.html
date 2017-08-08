@@ -10,13 +10,19 @@
 <body>
   <script>
     require(['base'], function (base) {
-      var stack = new base.Stack([1,2,3]);
-      // 
-      console.log(stack.empty());
+      var stack = new base.Stack();
+      console.log(stack.isEmpty());
       stack.push('123');
-      console.log(stack.empty());
+      console.log(stack.isEmpty());
       stack.pop();
-      console.log(stack.empty());      
+      console.log(stack.isEmpty());
+      // 队列
+      var queue = new base.Queue();
+      console.log(queue.isEmpty());
+      queue.enqueue('123');
+      console.log(queue.isEmpty());
+      queue.dequeue();
+      console.log(queue.isEmpty());
     })
   </script>
 </body>
