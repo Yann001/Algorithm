@@ -32,31 +32,38 @@ define(function () {
   Queue.prototype = {
     isEmpty: function () {
       if (this.head === this.tail) {
+        this.head = this.tail = 0;
         return true;
       } else {
         return false;
       }
     },
     enqueue: function (item) {
-      if (this.queue.length === this.tail) {
-        this.tail = 0;
-        this.queue[this.tail] = item;
-      } else {
-        this.queue[this.tail++] = item;
-      }
+      this.queue[this.tail++] = item;
     },
     dequeue: function () {
       if (this.isEmpty()) {
         return new Error('queue underflow');
       } else {
-        var x = this.queue[this.head];
-        if (this.queue.length === this.head) {
-          this.head = 0;
-        } else {
-          this.head++
-        }
-        return x;
+        return this.queue[this.head++];
       }
+    }
+  }
+  // 链表
+  function LinkList() {
+    this.key = [];
+    this.prev = [];
+    this.next = [];
+  }
+  LinkList.prototype = {
+    search: function () {
+
+    },
+    insert: function () {
+
+    },
+    delete: function () {
+
     }
   }
 

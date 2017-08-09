@@ -19,10 +19,15 @@
       // 队列
       var queue = new base.Queue();
       console.log(queue.isEmpty());
-      queue.enqueue('123');
+      queue.enqueue('1');
+      queue.enqueue('2');
+      queue.enqueue('3');
       console.log(queue.isEmpty());
       queue.dequeue();
+      queue.dequeue();
+      queue.dequeue();
       console.log(queue.isEmpty());
+      queue.enqueue(4)
     })
   </script>
 </body>
