@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>彩色的砖块</title>
+</head>
+
+<body>
+  <script>
+    var s = 'ABAB';
+    s = s.toUpperCase();
+    var arr = s.split('');
+    var obj = {};
+    var count = 0;
+    arr.forEach(function (item) {
+      obj[item] = item;
+    })
+    for (var k in obj) {
+      count++;
+    }
+    // print(factorial(count));
+    console.log(factorial(count));
+    function factorial(n) {
+      if (n > 1) {
+        return n * factorial(n - 1)
+      } else {
+        return 1;
+      }
+    }
+  </script>
+</body>
+
+</html>

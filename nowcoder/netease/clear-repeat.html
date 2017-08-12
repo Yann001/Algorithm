@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // var n = read_line();
+    // var arr = read_line();
+    var arr = '100 100 100 99 99 99 100 100 100';
+    arr = arr.split(' ');
+    var ret = {};
+    for (var i = 0, len = arr.length; i < len; i++) {
+      ret[arr[i]] = i;
+    }
+    for (var key in ret) {
+      // print(ret[key]);
+      console.log(key);
+    }
+  </script>
+</body>
+
+</html>

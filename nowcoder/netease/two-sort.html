@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>两种排序</title>
+</head>
+
+<body>
+  <script>
+    var n = 4;
+    arr = [3, 'a', 'aa', 'bbb']
+    var ret = {},
+      isLock1 = false,
+      isLock2 = false;
+    for (var i = 0; i < n - 1; i++) {
+      if (arr[i + 1].toString() >= arr[i].toString() && !isLock1) {
+        ret.lexicographically = true;
+      } else {
+        isLock1 = true;
+        ret.lexicographically = false;
+      }
+      if (arr[i + 1].toString().length >= arr[i].toString().length && !isLock2) {
+        ret.lengths = true;
+      } else {
+        isLock2 = true;
+        ret.lengths = false;
+      }
+      if (isLock1 && isLock2) {
+        break;
+      }
+    }
+    if (ret.lexicographically && ret.lengths) {
+      console.log('both')
+    } else if (ret.lexicographically && !ret.lengths) {
+      console.log('lexicographically')
+    } else if (!ret.lexicographically && ret.lengths) {
+      console.log('length');
+    } else {
+      console.log('none');
+    }
+  </script>
+</body>
+
+</html>
