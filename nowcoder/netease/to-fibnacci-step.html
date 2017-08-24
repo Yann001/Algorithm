@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>变成Finbinacci数需要的步数</title>
+</head>
+
+<body>
+  <script>
+    var n = 1;
+    var fib = [0, 1];
+    if (n == 0) {
+      console.log(0);
+    } else {
+      for (var i = 2; ; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+        if (fib[i] >= n) {
+          break;
+        }
+      }
+      var lStep = n - fib[i - 1],
+        rStep = fib[i] - n;
+      console.log(lStep <= rStep ? lStep : rStep)
+      // print(lStep <= rStep ? lStep : rStep)
+    }
+  </script>
+</body>
+
+</html>

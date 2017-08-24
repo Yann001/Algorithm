@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>交错01串</title>
+</head>
+
+<body>
+  <script>
+    var s = '1111010111';
+    var arr = s.split('');
+    console.log(f1(arr, 0, arr.length - 1));
+    function f1(arr, left, right) {
+      if (left == right) {
+        return 0;
+      } else {
+        var mid = Math.floor((left + right) / 2);
+        var lResult = f1(arr, left, mid);
+        var rResult = f1(arr, mid + 1, right);
+        var mResult = f2(arr, left, mid, right);
+        var result = lResult > rResult ? lResult : rResult;
+        return result > mResult ? result : mResult;
+      }
+    }
+    function f2(arr, left, mid, right) {
+      var len = 1,
+        lsum = 1,
+        rsum = 1;
+      for (var i = mid; i > left; i--) {
+        if (arr[i] != arr[i - 1]) {
+          len++;
+          if (len > lsum) {
+            lsum = len;
+          }
+        } else {
+          len = 1;
+        }
+      }
+      len = 1;
+      for (var j = mid + 1; j < right; j++) {
+        if (arr[j] != arr[j + 1]) {
+          len++;
+          if (len > rsum) {
+            rsum = len;
+          }
+        } else {
+          len = 1;
+        }
+      }
+      if (arr[mid] != arr[mid + 1]) {
+        return lsum + rsum;
+      } else {
+        return lsum > rsum ? lsum : rsum;
+      }
+    }
+  </script>
+</body>
+
+</html>
