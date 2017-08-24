@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../lib/require.js"></script>
+  <title>2017校招真题</title>
+</head>
+
+<body>
+  <h2>打开控制台查看结果</h2>
+  <script>
+    require(['old-exam-2017'], function (oe7) {
+      // // 数串
+      // console.log(oe7.numberStr([12, 123]));
+      // console.log(oe7.numberStr([7, 13, 4, 246]));
+      // var test = '93 672 946 153 947 82 522 772 725 413 936 649 399 123 821 93 29 860 572 344 608 590 554 210 115 307 313 535 636 184 291 66 178 379 204 523 758'
+      // console.log(oe7.numberStr(test.split(' ')))
+      // 句子反转
+      // console.log(oe7.reverseSentence('hello xiao mi'));
+      // 水仙花数
+      console.log(oe7.shuiXianHua(100,120));
+      console.log(oe7.shuiXianHua(300,380));
+    })
+  </script>
+</body>
+
+</html>
