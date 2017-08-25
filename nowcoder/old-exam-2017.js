@@ -63,6 +63,21 @@ define(function () {
       return 'no';
     }
   }
+
+  var jumpRiver = function (n, array) {
+    var len = array.length;
+    var step = [0];
+    for (var i = 1; i < len; i++) {
+      for (var j = i - 1; j > 0; j--) {
+        if (array[j] == 0) {
+          continue;
+        }
+        if (j + array[j] >= i) {
+          step[j] = Math.min(step[i], step[j] + 1);
+        }
+      }
+    }
+  }
   return {
     numberStr,
     reverseSentence,

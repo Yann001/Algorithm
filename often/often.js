@@ -6,7 +6,7 @@ define(function () {
    * 使用分治策略的方法求解
    * @param {array} array 
    */
-  var findMaxSumSubArr = function (array) {
+  var findMaxSumSubArr1 = function (array) {
     var arr = array.slice();
     return f1(arr, 0, arr.length - 1);
     function f1(arr, left, right) {
@@ -45,6 +45,52 @@ define(function () {
       }
       return [lIndex, rIndex, lSum + rSum]
     }
+  }
+  /**
+   * @description 和最大的子数组：
+   * 在一个包含负数的数组中，求出和最大的子数组，
+   * 使用动态规划的方法求解,
+   * 设sum[i]为以第i个元素结尾且和最大的连续子数组。
+   * 假设对于元素i，所有以它前面的元素结尾的子数组的长度都已经求得，
+   * 那么以第i个元素结尾且和最大的连续子数组实际上，
+   * 要么是以第i-1个元素结尾且和最大的连续子数组加上这个元素，
+   * 要么是只包含第i个元素，即sum[i] = max(sum[i-1] + a[i], a[i])。
+   * 可以通过判断sum[i-1] + a[i]是否大于a[i]来做选择，
+   * 而这实际上等价于判断sum[i-1]是否大于0。
+   * 由于每次运算只需要前一次的结果，因此并不需要像普通的动态规划那样保留之前所有的计算结果，
+   * 只需要保留上一次的即可，因此算法的时间和空间复杂度都很小。
+   * @param {array} array 
+   */
+  var findMaxSumSubArr2 = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    var ret = arr[0] - 0;
+    var sum = ret;
+    for (var i = 1; i < len; i++) { // 依次遍历以i结尾的和最大的子数组
+      if (sum > 0) {
+        sum += (arr[i] - 0);
+      } else {
+        sum = arr[i] - 0;
+      }
+      if (sum > ret) {
+        ret = sum;
+      }
+    }
+    return ret;
+  }
+
+  var find = function (array, n) {
+    var sum = array[0];
+    for (var i = 1; i < n; i++) {
+
+      if (sum >= 0) {
+        sum += array[i];
+      }
+      else {
+        sum = array[i];
+      }
+    }
+    return sum;
   }
 
   /**
@@ -179,14 +225,45 @@ define(function () {
       return ret;
     }
   }
+  /**
+   * @desc 活动安排问题，递归贪心算法
+   * @param {array} s 活动开始时间数组
+   * @param {array} f 活动结束时间数组
+   * @param {number} k 开始遍历下标
+   * @param {number} n 结束遍历下标
+   */
+  var recursionActivitySelector = function (s, f, k, n) {
+    var m = k + 1;
+    var a = [];
+    while (m <= n && s[m] < f[k]) {
+      m++;
+    }
+    if (m <= n) {
+      return a.push(recursionActivitySelector(s, f, m, n));
+    } else {
+      return a;
+    }
+  }
 
-  var recursionActivitySelector = function () {
-    
+  var greedyActivitySelector = function (s, f) {
+    var n = s.length;
+    var a = [0];
+    var k = 1;
+    for (var m = 2; m < n; m++) {
+      if (s[m] >= f[k]) {
+        a.push(m);
+        k = m;
+      }
+    }
+    return a;
   }
 
   return {
-    findMaxSumSubArr,
+    findMaxSumSubArr1,
+    findMaxSumSubArr2,
     cutSteel,
     LCS,
+    recursionActivitySelector,
+    greedyActivitySelector,
   }
 })
