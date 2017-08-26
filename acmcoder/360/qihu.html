@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,22 @@
   <script src="../../lib/require.js"></script>
   <title>奇虎360真题</title>
 </head>
+
 <body>
   <script>
     require(['qihu'], function (qihu) {
-      var test1 = '4 7 2 9 5 2';
-      var test2 = '140 649 340 982 105 86 56 610 340 879';
-      console.log(qihu.divideGold(test1.split(' ')));
-      console.log(qihu.divideGold(test2.split(' ')));
+      // 分金子
+      // var test1 = '4 7 2 9 5 2';
+      // var test2 = '140 649 340 982 105 86 56 610 340 879';
+      // console.log(qihu.divideGold(test1.split(' ')));
+      // console.log(qihu.divideGold(test2.split(' ')));
+      // 跳水
+      var test1 = [4, 5, 1, 3, 2];
+      console.log(qihu.jumpWater(test1));
+      console.log(qihu.changeNum([1, 3, 7, 9], [2, 10, 12]));
+
     })
   </script>
 </body>
+
 </html>

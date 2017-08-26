@@ -37,8 +37,57 @@ define(function () {
     return [sumA, sumB];
   }
 
+  var jumpWater = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    var ret = [0]
+    for (var i = 1; i < len; i++) {
+      var sum = 0;
+      for (var j = i - 1; j >= 0; j--) {
+        if (arr[j])
+          if (arr[j] > arr[i]) {
+            sum++;
+          }
+      }
+      ret[i] = sum;
+    }
+    return ret;
+  }
+
+  var changeNum = function (arr1, arr2) {
+    var n = arr1.length, m = arr2.length;
+    var len = n < m ? n : m;
+    var ret = [];
+    var sumA = arr1.reduce(function (a, b) {
+      return a + b;
+    })
+    var sumB = arr2.reduce(function (a, b) {
+      return a + b;
+    })
+    var min = Math.abs(sumA - sumB);
+    for (var i = 0; i < len; i++) {
+      ret[i] = Math.abs(arr1[arr1.length - 1 - i] - arr2[arr2.length - 1 - i]);
+    }
+    ret.sort(function (a, b) {
+      return b - a;
+    })
+    var count = 0;
+    for (var j = 0, lenr = ret.length; j < lenr; j++) {
+      if (count > 1) {
+        break;
+      }
+      if (min - ret[j] >= 0) {
+        count++;
+        min -= ret[j]
+      }
+    }
+    return min;
+  }
+
   return {
     divideGold,
+    jumpWater,
+    changeNum,
   }
 })
 
