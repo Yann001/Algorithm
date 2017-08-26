@@ -79,20 +79,6 @@ define(function () {
     return ret;
   }
 
-  var find = function (array, n) {
-    var sum = array[0];
-    for (var i = 1; i < n; i++) {
-
-      if (sum >= 0) {
-        sum += array[i];
-      }
-      else {
-        sum = array[i];
-      }
-    }
-    return sum;
-  }
-
   /**
    * @description 钢条切割问题：
    * 给出一段总长度为n的钢条，长度为i的钢条的价格为p[i]，
@@ -267,3 +253,29 @@ define(function () {
     greedyActivitySelector,
   }
 })
+
+import java.util.Scanner;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i = 0; i < n; i++){
+            arr[i] = sc.nextInt();
+        }
+        int ret = arr[0];
+        int sum = arr[0];
+        for(int i = 1 ; i < n; i++){
+            if(sum > 0){
+                sum += arr[i]; 
+            }else{
+                sum = arr[i];
+            }
+            if(sum > ret) ret = sum;
+        }
+        System.out.println(ret);
+    }
+}
+
+
+
