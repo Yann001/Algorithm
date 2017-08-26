@@ -63,21 +63,23 @@ define(function () {
       return 'no';
     }
   }
-
+  /**
+   * @desc 袋鼠过河
+   * @param {number} number 河的宽度
+   * @param {array} array 输入弹簧柱子数组
+   */
   var jumpRiver = function (n, array) {
     var len = array.length;
     var step = [0];
     for (var i = 1; i < len; i++) {
-      for (var j = i - 1; j > 0; j--) {
-        if (array[j] == 0) {
-          continue;
-        }
-        if (j + array[j] >= i) {
-          step[j] = Math.min(step[i], step[j] + 1);
+      for (var j = i - 1; j >= 0;j--) {
+        if (array[j] + 1 >= array[i]) {
+          // step[i] = Math.min(step[i-1]+1,)
         }
       }
     }
   }
+  
   return {
     numberStr,
     reverseSentence,

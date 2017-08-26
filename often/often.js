@@ -244,6 +244,36 @@ define(function () {
     return a;
   }
 
+  var factorial = function (n) {
+    var ret = 1
+    for (var i = 1; i <= n; i++) {
+      ret *= i;
+    }
+    return ret.toString();
+  }
+
+  var selection = function (array, k) {
+    var arr = array.slice();
+    var len = arr.length;
+    for (var i = 0; i < len - 1; i++) {
+      var maxIdx = i;
+      //未排序序列中找出最大值
+      for (var j = i + 1; j < len; j++) {
+        if (arr[j] > arr[maxIdx]) {
+          maxIdx = j;
+        }
+      }
+      //最大值不等于当前值，则交换
+      if (maxIdx != i) {
+        arr[i] = [arr[maxIdx], arr[maxIdx] = arr[i]][0];
+      }
+      if (i == k - 1) {
+        break;
+      }
+    }
+    return arr[k - 1];
+  };
+
   return {
     findMaxSumSubArr1,
     findMaxSumSubArr2,
@@ -251,31 +281,11 @@ define(function () {
     LCS,
     recursionActivitySelector,
     greedyActivitySelector,
+    factorial,
+    selection
   }
 })
 
-import java.util.Scanner;
-public class Main{
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] arr = new int[n];
-        for(int i = 0; i < n; i++){
-            arr[i] = sc.nextInt();
-        }
-        int ret = arr[0];
-        int sum = arr[0];
-        for(int i = 1 ; i < n; i++){
-            if(sum > 0){
-                sum += arr[i]; 
-            }else{
-                sum = arr[i];
-            }
-            if(sum > ret) ret = sum;
-        }
-        System.out.println(ret);
-    }
-}
 
 
 

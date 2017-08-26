@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../../lib/require.js"></script>
+  <title>滴滴真题</title>
+</head>
+
+<body>
+  <script>
+    require(['didi'], function (didi) {
+      var table = [2, 4, 2];
+      var people = {
+        0: [1, 3],
+        1: [3, 50],
+        2: [3, 7],
+        3: [5, 9],
+        4: [1, 10]
+      }
+      console.log(didi.restaurant(table, people));
+    })
+  </script>
+</body>
+
+</html>

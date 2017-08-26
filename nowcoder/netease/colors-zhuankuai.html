@@ -24,11 +24,16 @@
     // print(factorial(count));
     console.log(factorial(count));
     function factorial(n) {
-      if (n > 1) {
-        return n * factorial(n - 1)
-      } else {
-        return 1;
+      // if (n > 1) {
+      //   return n * factorial(n - 1)
+      // } else {
+      //   return 1;
+      // }
+      var ret = 1
+      for (var i = 1; i <= n; i++) {
+        ret *= i;
       }
+      return ret;
     }
   </script>
 </body>
