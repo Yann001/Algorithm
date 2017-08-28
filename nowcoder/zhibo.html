@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>牛客网zuochengyun直播</title>
-  <script src="../lib/require.js" data-main="main.js"></script>
+  <script src="../lib/require.js"></script>
 </head>
 
 <body>
@@ -28,6 +28,13 @@
       }
       return Math.max(f(arr, i, j - 1), f(arr, i + 1, j));
     }
+  </script>
+  <script>
+  require(['zhibo'], function (zhibo) {
+    var stack = [1,2,3,4,5];
+    var size = 5;
+    console.log(zhibo.recursionReverseStack(stack, size));
+  })
   </script>
 </body>
 

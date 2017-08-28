@@ -69,20 +69,27 @@ define(function () {
    * @param {array} array 输入弹簧柱子数组
    */
   var jumpRiver = function (n, array) {
+    // 末尾加一个虚拟弹簧
+    array.push(0);
     var len = array.length;
     var step = [0];
+    for (var i = 1; i <= n; i++) {
+      step[i] = Infinity;
+    }
     for (var i = 1; i < len; i++) {
-      for (var j = i - 1; j >= 0;j--) {
-        if (array[j] + 1 >= array[i]) {
-          // step[i] = Math.min(step[i-1]+1,)
+      for (var j = i - 1; j >= 0; j--) {
+        if (array[j] >= i - j) {
+          step[i] = Math.min(step[i], step[j] + 1);
         }
       }
     }
+    return step[len - 1] == Infinity ? -1 : step[len - 1];
   }
-  
+
   return {
     numberStr,
     reverseSentence,
     shuiXianHua,
+    jumpRiver
   }
 })
