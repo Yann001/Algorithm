@@ -64,13 +64,13 @@ define(function () {
   var findMaxSumSubArr2 = function (array) {
     var arr = array.slice();
     var len = arr.length;
-    var ret = arr[0] - 0;
+    var ret = arr[0];
     var sum = ret;
     for (var i = 1; i < len; i++) { // 依次遍历以i结尾的和最大的子数组
       if (sum > 0) {
-        sum += (arr[i] - 0);
+        sum += arr[i];
       } else {
-        sum = arr[i] - 0;
+        sum = arr[i];
       }
       if (sum > ret) {
         ret = sum;

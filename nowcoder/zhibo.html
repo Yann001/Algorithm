@@ -11,10 +11,9 @@
 
 <body>
   <script>
-    
     function win1() {
       //对数器测试
-      
+
     }
     function f(arr, i, j) {
       if (i == j) {
@@ -30,11 +29,12 @@
     }
   </script>
   <script>
-  require(['zhibo'], function (zhibo) {
-    var stack = [1,2,3,4,5];
-    var size = 5;
-    console.log(zhibo.recursionReverseStack(stack, size));
-  })
+    require(['zhibo'], function (zhibo) {
+      // var arr = [1, 3, 5, 2, 4, 6];
+      // console.log(zhibo.smallSumOfArray(arr));
+      var height = [6,2,5,4,5,1,6];
+      console.log(zhibo.maxRectArea(height));
+    })
   </script>
 </body>
 
