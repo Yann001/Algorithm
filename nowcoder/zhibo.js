@@ -24,13 +24,19 @@ define(function () {
     }
     return count == 0;
   }
-
+  /**
+   * 只用递归实现栈的逆序
+   * @param {Array} stack 栈数组
+   * @param {Number} size 栈大小
+   */
   var recursionReverseStack = function (stack, size) {
+    var ret = [];
     if (size == 0) {
-      return stack[size];
+      ret.push(stack[size]);
     } else {
-      return recursionReverseStack(stack, --size);
+      ret.push(recursionReverseStack(stack, --size));
     }
+    return ret;
   }
   /**
    * @desc 数组小和的定义如下：
@@ -57,7 +63,11 @@ define(function () {
     }
     return smallSum;
   }
-
+  /**
+   * 求直方图中矩形最大面积
+   * @param {Array} height 直方图高度数组
+   * @return {Number} 面积
+   */
   var maxRectArea = function (height) {
     var len = height.length;
     if (!len) {
@@ -66,7 +76,7 @@ define(function () {
     var maxArea = 0;
     var stack = [];
     for (var i = 0; i < len; i++) {
-      while(stack.length && height[i] <= height[stack[stack.length - 1]]) {
+      while (stack.length && height[i] <= height[stack[stack.length - 1]]) {
         var j = stack.pop();
         var k = !stack.length ? -1 : stack[stack.length - 1];
         var curArea = (i - k - 1) * height[j];
@@ -76,19 +86,43 @@ define(function () {
     }
     while (stack.length) {
       var j = stack.pop();
-      var k = stack.length ? -1 : stack[stack.length - 1];
+      var k = !stack.length ? -1 : stack[stack.length - 1];
       var curArea = (len - k - 1) * height[j];
       maxArea = Math.max(maxArea, curArea);
     }
     return maxArea
   }
 
-
+  var changeMoney = {
+    forceRecursion: function (denomination, aim) {
+      var arr = denomination.slice();
+      var len = arr.length;
+      if (!arr.length || aim < 0) {
+        return 0;
+      }
+      return recursion(arr, 0, aim);
+      function recursion(arr, index, aim) {
+        var ret = 0;
+        if (index == arr.length) {
+          ret = aim == 0 ? 1 : 0;
+        } else {
+          for (var i = 0; arr[index] * i <= aim; i++) {
+            ret += recursion(arr, index + 1, aim - arr[index] * i);
+          }
+        }
+        return ret;
+      }
+    },
+    memoryRecursion: function (denomination, aim) {
+      
+    }
+  }
 
   return {
     isValidBrackets,
     recursionReverseStack,
     smallSumOfArray,
     maxRectArea,
+    changeMoney,
   }
 });
