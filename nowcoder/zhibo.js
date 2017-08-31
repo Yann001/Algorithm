@@ -92,7 +92,7 @@ define(function () {
     }
     return maxArea
   }
-
+  // 交换钱币问题
   var changeMoney = {
     forceRecursion: function (denomination, aim) {
       var arr = denomination.slice();
@@ -100,21 +100,157 @@ define(function () {
       if (!arr.length || aim < 0) {
         return 0;
       }
-      return recursion(arr, 0, aim);
-      function recursion(arr, index, aim) {
+      return recursion1(arr, 0, aim);
+      function recursion1(arr, index, aim) {
         var ret = 0;
         if (index == arr.length) {
           ret = aim == 0 ? 1 : 0;
         } else {
           for (var i = 0; arr[index] * i <= aim; i++) {
-            ret += recursion(arr, index + 1, aim - arr[index] * i);
+            ret += recursion1(arr, index + 1, aim - arr[index] * i);
           }
         }
         return ret;
       }
     },
     memoryRecursion: function (denomination, aim) {
-      
+      var arr = denomination.slice();
+      var len = arr.length;
+      if (!arr.length || aim < 0) {
+        return 0;
+      }
+      var map = [[]];
+      for (var i = 0; i < len + 1; i++) {
+        map[i] = [0];
+      }
+      for (var j = 0; j < aim + 1; j++) {
+        map[0][j] = 0;
+      }
+      return recursion2(arr, 0, aim, map);
+      function recursion2(arr, index, aim) {
+        var ret = 0;
+        if (index == arr.length) {
+          ret = aim == 0 ? 1 : 0;
+        } else {
+          var mapValue = 0;
+          for (var i = 0; arr[index] * i <= aim; i++) {
+            mapValue = map[index + 1][aim - arr[index] * i];
+            if (mapValue) {
+              ret += mapValue == -1 ? 0 : mapValue;
+            } else {
+              ret += recursion2(arr, index + 1, aim - arr[index] * i, map);
+            }
+          }
+        }
+        map[index][aim] = ret == 0 ? -1 : ret;
+        return ret;
+      }
+    },
+    dynamicProgram: function (denomination, aim) {
+      var arr = denomination.slice();
+      var len = arr.length;
+      if (!arr.length || aim < 0) {
+        return 0;
+      }
+      var dp = [[]];
+      for (var i = 0; i < len + 1; i++) {
+        dp[i] = [1];
+      }
+      for (var j = 1; arr[0] * j <= aim; j++) {
+        dp[0][arr[0] * j] = 1;
+      }
+      var num = 0;
+      for (var i = 1; i < len; i++) {
+        for (var j = 1; j <= aim; j++) {
+          num = 0;
+          for (var k = 0; j - arr[i] * k >= 0; k++) {
+            num += dp[i - 1][j - arr[i] * k];
+          }
+          dp[i][j] = num;
+        }
+      }
+      return dp[len - 1][aim];
+    },
+    dynamicProgram1: function (denomination, aim) {
+      var arr = denomination.slice();
+      var len = arr.length;
+      if (!arr.length || aim < 0) {
+        return 0;
+      }
+      var dp = [[]];
+      for (var i = 0; i < len + 1; i++) {
+        dp[i] = [1];
+      }
+      for (var j = 1; arr[0] * j <= aim; j++) {
+        dp[0][arr[0] * j] = 1;
+      }
+      for (var i = 1; i < len; i++) {
+        for (var j = 1; j <= aim; j++) {
+          dp[i][j] = dp[i - 1][j];
+          dp[i][j] += j - arr[i] >= 0 ? dp[i][j - arr[i]] : 0;
+        }
+      }
+      return dp[len - 1][aim];
+    },
+    dynamicProgram2: function (denomination, aim) {
+      var arr = denomination.slice();
+      var len = arr.length;
+      if (!arr.length || aim < 0) {
+        return 0;
+      }
+      var dp = [];
+      for (var j = 0; arr[0] * j <= aim; j++) {
+        dp[arr[0] * j] = 1;
+      }
+      for (var i = 1; i < len; i++) {
+        for (var j = 1; j <= aim; j++) {
+          dp[j] += j - arr[i] >= 0 ? dp[j - arr[i]] : 0;
+        }
+      }
+      return dp[aim];
+    }
+  }
+  // 最长递增子序列问题
+  var LIS = {
+    dynamicProgram: function (array) {
+      var arr = array.slice();
+      if(!arr.length) {
+        return [];
+      }
+      var dp = getDP(arr);
+      return getLIS(arr, dp);
+      function getDP(arr) {
+        var len = arr.length;
+        var dp = [];
+        for (var i = 0; i < len; i++) {
+          dp[i] = 1;
+          for (var j = 0; j < i; j++) {
+            if (arr[i] > arr[j]) {
+              dp[i] = Math.max(dp[i], dp[j] + 1);
+            }
+          }
+        }
+        return dp;
+      }
+      function getLIS(arr, dp) {
+        var len = 0;
+        var index = 0;
+        for (var i = 0; i < dp.length; i++) {
+          if (dp[i] > len) {
+            len = dp[i];
+            index = i;
+          }
+        }
+        var lis = [];
+        lis[--len] = arr[index];
+        for (var i = index; i>=0;i--) {
+          if (arr[i] < arr[index] && dp[i] == dp[index] - 1) {
+            lis[--len] = arr[i];
+            index = i;
+          }
+        }
+        return lis;
+      }
     }
   }
 
@@ -124,5 +260,6 @@ define(function () {
     smallSumOfArray,
     maxRectArea,
     changeMoney,
+    LIS
   }
 });
