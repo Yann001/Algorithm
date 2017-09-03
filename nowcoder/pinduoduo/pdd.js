@@ -77,8 +77,41 @@ define(function () {
     }
   }
 
+  var mulCurry = function () {
+    var args = [];
+    return function () {
+      if (arguments.length===0) {
+        return args.reduce(function (a, b) {
+          return a * b;
+        });
+      }
+      [].push.apply(args, [].slice.call(arguments));
+      return arguments.callee;
+    }
+  }
+  var curry = function (fn) {
+    var args = [];
+    return function () {
+      if (!arguments.length) {
+        return fn.apply(this, args);
+      }
+      Array.prototype.push.apply(args, arguments);
+      return arguments.callee;
+    }
+  }
+
+  var multi = function () {
+    return Array.prototype.slice.call(arguments).reduce(function (a, b) {
+      return a * b;
+    });
+  }
+
+  var mul = curry(multi);
+
   return {
     isValidBrackets,
     mostOneLine,
+    mulCurry,
+    mul
   }
 })
