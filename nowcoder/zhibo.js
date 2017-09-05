@@ -348,6 +348,32 @@ define(function () {
       return res.join('');
     }
   }
+  /**
+   * @desc 字符串的最长无重复的字符串
+   * @param {String} str 输入字符串
+   * @return {Number} 最长无重复字符串长度
+   */
+  var maxUniqueStr = function (str) {
+    var
+      len = str.length,
+      map = {},
+      pre = -1,
+      cur = 0,
+      res = 0;
+    if (!len) {
+      return 0;
+    }
+    for (var i = 0; i < 256; i++) {
+      map[i] = -1;
+    }
+    for (var i = 0; i < len; i++) {
+      pre = Math.max(pre, map[str[i].charCodeAt()]);
+      cur = i - pre;
+      res = Math.max(res, cur);
+      map[str[i].charCodeAt()] = i;
+    }
+    return res;
+  }
 
   return {
     isValidBrackets,
@@ -358,5 +384,6 @@ define(function () {
     changeMoney,
     LIS,
     addSomeBecomePalindrome,
+    maxUniqueStr,
   }
 });
