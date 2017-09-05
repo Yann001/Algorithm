@@ -25,6 +25,36 @@ define(function () {
     return count == 0;
   }
   /**
+   * 字符串的最长有效括号长度
+   * @param {String} str 输入字符串
+   * @return {Number} 最长有效长度
+   */
+  var longestValidBrackets = function (str) {
+    var
+      arr = str.split(''),
+      len = arr.length,
+      dp = [],
+      pre = 0;
+      res = 0;
+    if (len < 2) {
+      return 0;
+    }
+    for (var i = 0; i < len; i++) {
+      dp[i] = 0;
+    }
+    for (var i = 1; i < len; i++) {
+      if (arr[i] == ')') {
+        pre = i - dp[i - 1] -1;
+        if (pre >= 0 && arr[pre] == '(') {
+          dp[i] = dp[i - 1] + 2 + (pre > 0 ? dp[pre - 1] : 0);
+        }
+      }
+      res = Math.max(res, dp[i]);
+    }
+    return res;
+  }
+
+  /**
    * 只用递归实现栈的逆序
    * @param {Array} stack 栈数组
    * @param {Number} size 栈大小
@@ -101,6 +131,7 @@ define(function () {
         return 0;
       }
       return recursion1(arr, 0, aim);
+
       function recursion1(arr, index, aim) {
         var ret = 0;
         if (index == arr.length) {
@@ -119,7 +150,9 @@ define(function () {
       if (!arr.length || aim < 0) {
         return 0;
       }
-      var map = [[]];
+      var map = [
+        []
+      ];
       for (var i = 0; i < len + 1; i++) {
         map[i] = [0];
       }
@@ -127,6 +160,7 @@ define(function () {
         map[0][j] = 0;
       }
       return recursion2(arr, 0, aim, map);
+
       function recursion2(arr, index, aim) {
         var ret = 0;
         if (index == arr.length) {
@@ -152,7 +186,9 @@ define(function () {
       if (!arr.length || aim < 0) {
         return 0;
       }
-      var dp = [[]];
+      var dp = [
+        []
+      ];
       for (var i = 0; i < len + 1; i++) {
         dp[i] = [1];
       }
@@ -177,7 +213,9 @@ define(function () {
       if (!arr.length || aim < 0) {
         return 0;
       }
-      var dp = [[]];
+      var dp = [
+        []
+      ];
       for (var i = 0; i < len + 1; i++) {
         dp[i] = [1];
       }
@@ -214,11 +252,12 @@ define(function () {
   var LIS = {
     dynamicProgram: function (array) {
       var arr = array.slice();
-      if(!arr.length) {
+      if (!arr.length) {
         return [];
       }
       var dp = getDP(arr);
       return getLIS(arr, dp);
+
       function getDP(arr) {
         var len = arr.length;
         var dp = [];
@@ -232,6 +271,7 @@ define(function () {
         }
         return dp;
       }
+
       function getLIS(arr, dp) {
         var len = 0;
         var index = 0;
@@ -243,7 +283,7 @@ define(function () {
         }
         var lis = [];
         lis[--len] = arr[index];
-        for (var i = index; i>=0;i--) {
+        for (var i = index; i >= 0; i--) {
           if (arr[i] < arr[index] && dp[i] == dp[index] - 1) {
             lis[--len] = arr[i];
             index = i;
@@ -253,13 +293,70 @@ define(function () {
       }
     }
   }
+  // 添加最少任意个字符是字符串变回文（dp[0, len-1]）
+  var addSomeBecomePalindrome = function (str) {
+    var dp = getDp(str);
+    return getPalindrome(str, dp);
+
+    function getDp(str) {
+      var
+        len = str.length,
+        dp = [];
+      for (var i = 0; i < len; i++) {
+        var temp = [];
+        for (var j = 0; j < len; j++) {
+          temp[j] = 0;
+        }
+        dp.push(temp);
+      }
+      for (var j = 1; j < len; j++) {
+        dp[j - 1][j] = str[j - 1] == str[j] ? 0 : 1;
+        for (var i = j - 2; i >= 0; i--) {
+          if (str[i] == str[j]) {
+            dp[i][j] = dp[i + 1][j - 1];
+          } else {
+            dp[i][j] = Math.min(dp[i + 1][j], dp[i][j - 1]) + 1;
+          }
+        }
+      }
+      return dp;
+    }
+
+    function getPalindrome(str, dp) {
+      var len = str.length;
+      if (len < 2) {
+        return str;
+      }
+      var
+        res = [],
+        i = 0,
+        j = len - 1,
+        resl = 0,
+        resr = len - 1;
+      while (i <= j) {
+        if (str[i] == str[j]) {
+          res[resl++] = str[i++];
+          res[resr--] = str[j--];
+        } else if (dp[i][j - 1] < dp[i + 1][j]) {
+          res[resl++] = str[j];
+          res[resr--] = str[j--];
+        } else {
+          res[resl++] = str[i];
+          res[resr--] = str[i++];
+        }
+      }
+      return res.join('');
+    }
+  }
 
   return {
     isValidBrackets,
+    longestValidBrackets,
     recursionReverseStack,
     smallSumOfArray,
     maxRectArea,
     changeMoney,
-    LIS
+    LIS,
+    addSomeBecomePalindrome,
   }
 });

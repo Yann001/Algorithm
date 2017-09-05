@@ -30,6 +30,9 @@
   </script>
   <script>
     require(['zhibo'], function (zhibo) {
+      // 最长有效括号问题
+      var test1 = 'a((()))a(())((()))bc';
+      console.log(zhibo.longestValidBrackets(test1));
       // 递归逆序栈
       // var arr = [1, 3, 5, 2, 4, 6];
       // console.log(zhibo.smallSumOfArray(arr));
@@ -49,9 +52,15 @@
       // console.log(zhibo.changeMoney.dynamicProgram1(test1, aim1));
       // console.log(zhibo.changeMoney.dynamicProgram2(test1, aim1));
       // 最长递增子序列问题
-      var test1 = [2, 1, 5, 3, 6, 4, 8, 9, 7];
-      console.log(zhibo.LIS.dynamicProgram(test1));
-
+      // var test1 = [2, 1, 5, 3, 6, 4, 8, 9, 7];
+      // console.log(zhibo.LIS.dynamicProgram(test1));
+      // 添加最少字符使其变成回文
+      var test1 = 'abac';
+      var test2 = 'ab';
+      var test3 = 'aba';
+      console.log(zhibo.addSomeBecomePalindrome(test1));
+      console.log(zhibo.addSomeBecomePalindrome(test2));
+      console.log(zhibo.addSomeBecomePalindrome(test3));
 
     })
   </script>

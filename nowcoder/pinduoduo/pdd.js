@@ -1,5 +1,5 @@
 define(function () {
-  var mostOneLine =  function (arr) {
+  var mostOneLine = function (arr) {
     var m = arr.length;
     var n = arr[0].length;
     var minIdx = [0, n - 1];
@@ -7,9 +7,9 @@ define(function () {
       for (var j = n - 1; j > 0; j--) {
         if (arr[i][j]) {
           if (j == minIdx[1]) {
-            minIdx = minIdx.concat([i,j]);
+            minIdx = minIdx.concat([i, j]);
           } else if (j < minIdx[1]) {
-            minIdx = [i,j];
+            minIdx = [i, j];
           }
         } else {
           i++;
@@ -76,27 +76,19 @@ define(function () {
       return false;
     }
   }
-
-  var mulCurry = function () {
-    var args = [];
-    return function () {
-      if (arguments.length===0) {
-        return args.reduce(function (a, b) {
-          return a * b;
-        });
-      }
-      [].push.apply(args, [].slice.call(arguments));
-      return arguments.callee;
-    }
-  }
+  /**
+   * 函数柯里化
+   * @param {Function} fn 函数
+   */
   var curry = function (fn) {
     var args = [];
-    return function () {
+    return function cb() {
       if (!arguments.length) {
         return fn.apply(this, args);
       }
       Array.prototype.push.apply(args, arguments);
-      return arguments.callee;
+      // return arguments.callee;
+      return cb;
     }
   }
 
@@ -111,7 +103,6 @@ define(function () {
   return {
     isValidBrackets,
     mostOneLine,
-    mulCurry,
     mul
   }
 })
