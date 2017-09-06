@@ -374,6 +374,39 @@ define(function () {
     }
     return res;
   }
+  /**
+   * @desc 将一个字符串切割成回文子串的最小分割数
+   * @param {String} str 输入字符串
+   * @return {Number} 最小切割次数
+   */
+  var minCutBecomePalindrome = function (str) {
+    var
+      arr = str.split(''),
+      len = arr.length,
+      dp = [],
+      isp = [[]];
+    for (var i = 0; i < len; i++) {
+      dp[i] = 0;
+    }
+    for (var i = 0; i <= len; i++) {
+      var temp = [];
+      for (var j = 0; j <= len; j++) {
+        temp[j] = false;
+      }
+      isp.push(temp);
+    }
+    dp[len] = -1;
+    for (var i = len - 1; i >= 0; i--) {
+      dp[i] = Infinity;
+      for(var j = i; j < len; j++) {
+        if (arr[i] == arr[j] && (j - i < 2 || isp[i + 1][j - 1])) {
+          isp[i][j] = true;
+          dp[i] = Math.min(dp[i], dp[j + 1] + 1);
+        }
+      }
+    }
+    return dp[0];
+  }
 
   return {
     isValidBrackets,
@@ -385,5 +418,6 @@ define(function () {
     LIS,
     addSomeBecomePalindrome,
     maxUniqueStr,
+    minCutBecomePalindrome,
   }
 });
