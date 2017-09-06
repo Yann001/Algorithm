@@ -53,7 +53,6 @@ define(function () {
     }
     return res;
   }
-
   /**
    * 只用递归实现栈的逆序
    * @param {Array} stack 栈数组

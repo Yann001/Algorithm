@@ -78,6 +78,56 @@ define(function () {
     }
     return ret;
   }
+  /**
+   * @desc 和最大的子矩阵和
+   * @param {Array} matrix 输入矩阵
+   * @return {Number} 最大子矩阵和
+   */
+  var maxSumOfMatrix = function (matrix) {
+    var
+      m = matrix.length,
+      n = matrix[0].length,
+      max = -Infinity,
+      sum = [], // 累加数组
+      cur = 0;
+    for (var i = 0; i < m; i++) {
+      for (var s = 0; s < n; s++) {
+        sum[s] = 0;
+      }
+      for (var j = i; j < n; j++) {
+        cur = 0;
+        for (var k = 0; k < n; k++) {
+          sum[k] += matrix[j][k];
+          cur += sum[k];
+          max = Math.max(max, cur);
+          cur = cur < 0 ? 0 : cur;
+        }
+      }
+    }
+    return max;
+  }
+  /**
+   * @desc 数组中子数组的最大累乘积
+   * @param {Array} arr 输入数组
+   * @return {Number} 最大累乘积
+   */
+  var maxProductOfArr = function (arr) {
+    var
+      len = arr.length,
+      max = arr[0],
+      min = arr[0],
+      res = arr[0],
+      maxEnd = 0,
+      minEnd = 0;
+    for (var i = 1; i < len; i++) {
+      maxEnd = max * arr[i];
+      minEnd = min * arr[i];
+      max = Math.max(Math.max(maxEnd, minEnd), arr[i]);
+      min = Math.min(Math.min(maxEnd, minEnd), arr[i]);
+      res = Math.max(res, max);
+    }
+    return res;
+  }
 
   /**
    * @description 钢条切割问题：
@@ -277,6 +327,8 @@ define(function () {
   return {
     findMaxSumSubArr1,
     findMaxSumSubArr2,
+    maxSumOfMatrix,
+    maxProductOfArr,
     cutSteel,
     LCS,
     recursionActivitySelector,
