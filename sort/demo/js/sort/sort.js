@@ -47,7 +47,7 @@ define(function () {
     for (var i = 1; i < len; i++) {
       var j = i - 1, key = arr[i];
       // 在已排序的数组中找一个合适的位置（一个比待插入的数小的值）
-      while(j >= 0 && arr[j] > key) {
+      while (j >= 0 && arr[j] > key) {
         // 如果值比key大，则将其后移一位
         arr[j + 1] = arr[j];
         j--;
@@ -174,6 +174,32 @@ define(function () {
       }
     }
   };
+  var quick = function (array) {
+    var arr = array.slice();
+    var len = arr.length;
+    quickSort(arr, 0, len - 1);
+    return arr;
+    function quickSort(arr, left, right) {
+      if (left < right) {
+        var base = partion(arr, left, right);
+        quickSort(arr, left, base - 1);
+        quickSort(arr, base + 1, right);
+      }
+    }
+    function partion(arr, left, right) {
+      var
+        base = arr[right],
+        i = left - 1;
+      for (var j = left; j < right; j++) {
+        if (arr[j] <= base) {
+          i++;
+          arr[i] = [arr[j], arr[j] = arr[i]][0];
+        }
+      }
+      arr[i + 1] = [arr[right], arr[right] = arr[i + 1]][0];
+      return i + 1;
+    }
+  }
   // 堆排序
   var heap = function (array) {
     var arr = array.slice();
@@ -235,25 +261,48 @@ define(function () {
         mergeArray(arr, first, mid, last);
       }
     }
+    // function mergeArray(arr, first, mid, last) {
+    //   var i = first, j = mid + 1;
+    //   var m = mid, l = last;
+    //   var temp = [], k = 0;
+    //   while (i <= m && j <= l) {
+    //     if (arr[i] <= arr[j]) {
+    //       temp[k++] = arr[i++];
+    //     } else {
+    //       temp[k++] = arr[j++]
+    //     }
+    //   }
+    //   while (i <= m) {
+    //     temp[k++] = arr[i++];
+    //   }
+    //   while (j <= l) {
+    //     temp[k++] = arr[j++];
+    //   }
+    //   for (i = 0; i < k; i++) {
+    //     arr[first + i] = temp[i];
+    //   }
+    // }
     function mergeArray(arr, first, mid, last) {
-      var i = first, j = mid + 1;
-      var m = mid, l = last;
-      var temp = [], k = 0;
-      while (i <= m && j <= l) {
-        if (arr[i] <= arr[j]) {
-          temp[k++] = arr[i++];
+      var
+        llen = mid - first + 1,
+        rlen = last - mid,
+        L = [],
+        R = [];
+      for (var i = 0; i < llen; i++) {
+        L[i] = arr[first + i];
+      }
+      for (var j = 0; j < rlen; j++) {
+        R[j] = arr[mid + 1 + j];
+      }
+      L[llen] = Infinity;
+      R[rlen] = Infinity;
+      var i = 0, j = 0;
+      for (var k = first; k <= last; k++) {
+        if (L[i] <= R[j]) {
+          arr[k] = L[i++];
         } else {
-          temp[k++] = arr[j++]
+          arr[k] = R[j++];
         }
-      }
-      while (i <= m) {
-        temp[k++] = arr[i++];
-      }
-      while (j <= l) {
-        temp[k++] = arr[j++];
-      }
-      for (i = 0; i < k; i++) {
-        arr[first + i] = temp[i];
       }
     }
   };
