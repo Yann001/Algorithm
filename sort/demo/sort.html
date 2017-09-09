@@ -3,12 +3,18 @@
 
 <head>
   <meta charset="UTF-8">
-  <script src="js/lib/require.js" data-main="js/main"></script>
+  <script src="../../lib/require.js"></script>
   <title>排序</title>
 </head>
 
 <body>
   <h1>打开控制台查看结果</h1>
+  <script>
+    require(['sort'], function (sort) {
+      var test = [2,0,1,5,7,3,9,6,8,4];
+      console.log(sort.quick(test));
+    })
+  </script>
 </body>
 
 </html>

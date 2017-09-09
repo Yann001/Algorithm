@@ -307,14 +307,14 @@ define(function () {
     }
   };
   return {
-    bubble: bubble,
-    cocktail: cocktail,
-    insertion: insertion,
-    binaryInsert: binaryInsert,
-    shell: shell,
-    selection: selection,
-    quick: quick,
-    heap: heap,
-    merge, merge
+    bubble,
+    cocktail,
+    insertion,
+    binaryInsert,
+    shell,
+    selection,
+    quick,
+    heap,
+    merge,
   };
 });

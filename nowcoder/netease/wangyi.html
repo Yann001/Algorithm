@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function magicCoin(n) {
+    //   var
+    //     res = [],
+    //     s = n;
+    //   while (s) {
+    //     if (s % 2) {
+    //       s = (s - 1) / 2;
+    //       res.unshift('1');
+    //     } else {
+    //       s = (s - 2) / 2;
+    //       res.unshift('2');
+    //     }
+    //   }
+    //   return res.join('');
+    // }
+    // console.log(magicCoin(10));
+    function strFregment(str) {
+      var
+        len = str.length,
+        map = {},
+        total = 0;
+        count = 1;
+      map[str[0]] = 1;
+      if (!len) {
+        return 0;
+      }
+      for (var i = 1; i < len; i++) {
+        if (str[i] != str[i - 1]) {
+          count++
+        }
+        if (map[str[i]]) {
+          map[str[i]]++;
+        } else {
+          map[str[i]] = 1;
+        }
+      }
+      for (var key in map) {
+        total += map[key];
+      }
+      return (total / count).toFixed(2);
+    }
+    console.log(strFregment('aaabbaaac'));
+  </script>
+</body>
+
+</html>
