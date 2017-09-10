@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function unValid(n, m, c) {
+      var
+        arr = [],
+        res = 0,
+        colors = [[1, 2, 3], [], [2, 3], [2], [3]];
+      for (var i = 0; i < n; i++) {
+        var temp = [];
+        // var color = readline().split(' ');
+        var color = colors[i];
+        color = color.map(function (item) {
+          return parseInt(item);
+        });
+        for (var j = 0; j < c; j++) {
+          temp[j] = 0;
+        }
+        for (var j = 0; j < color.length; j++) {
+          temp[color[j] - 1] = color[j];
+        }
+        arr.push(temp);
+      }
+      for (var i = 0; i < c; i++) {
+        for (var j = 1; j < n; j++) {
+          if (arr[j][i] && arr[j][i] == arr[j - 1][i]) {
+            res++;
+          }
+        }
+        if (arr[j - 1][i] && arr[j - 1][i] == arr[0][i]) {
+          res++;
+        }
+      }
+      return res;
+    }
+    console.log(unValid(5, 2, 3));
+    // var n = parseInt(readline());
+    // var arr = readline().split(' ');
+    // var q = parseInt(readline());
+    var n = 5;
+    var arr = [1, 2, 3, 3, 5];
+    var q = 3;
+    var lines = [
+      [1, 2, 1],
+      [2, 4, 5],
+      [3, 5, 3]
+    ]
+    for (var i = 0; i < q; i++) {
+      // var line = readline().split(' ');
+      // line = line.map(function (item) {
+      //     return parseInt(item);
+      // });
+      var line = lines[i];
+      var len = line[1] > arr.length ? arr.length : line[1];
+      var res = 0;
+      for (var j = line[0] - 1; j < len; j++) {
+        if (arr[j] == line[2]) {
+          res++;
+        }
+      }
+      console.log(res);
+    }
+  </script>
+</body>
+
+</html>
