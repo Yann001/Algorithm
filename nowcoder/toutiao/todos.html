@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>todos</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      position: relative;
+      width: 500px;
+      top: 10%;
+      left: 50%;
+      margin-left: -250px;
+    }
+
+    .container .form {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+    }
+
+    .container .form .down {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+    }
+
+    .container .form .down::before,
+    .container .form .down::after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      width: 0;
+      height: 0;
+      border: solid transparent;
+    }
+
+    .container .form .down::before {
+      left: 8px;
+      border-width: 12px;
+      border-top-color: #000;
+    }
+
+    .container .form .down::after {
+      left: 10px;
+      border-width: 10px;
+      border-top-color: #fff;
+    }
+
+    .container .form .todo-input {
+      position: absolute;
+      width: calc(100% - 40px);
+      height: 40px;
+      top: 0;
+      left: 40px;
+      border: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container .list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container .list li {
+      height: 40px;
+      line-height: 40px;
+      padding-left: 10px;
+      border: 1px solid #ddd;
+      border-top: 0;
+      position: relative;
+    }
+
+    .container .list .delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      color: #f00;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form">
+      <a href="javascript:void(0);" class="down"></a>
+      <input type="text" id="todo-input" class="todo-input">
+    </div>
+    <ul class="list" id="todos">
+      <li>
+        <span>123</span>
+        <span class="delete">X</span>
+      </li>
+      <li>
+        <span>12345</span>
+        <span class="delete">X</span>
+      </li>
+    </ul>
+  </div>
+  <script>
+    function Todo(id) {
+      this.el = document.querySelector('#' + id);
+    }
+    Todo.prototype = {
+      addItem: function (data) {
+        var
+          li = document.createElement('li'),
+          span1 = document.createElement('span'),
+          span2 = document.createElement('span');
+        span1.textContent = data;
+        span2.textContent = 'X';
+        span2.setAttribute('class', 'delete');
+        li.appendChild(span1);
+        li.appendChild(span2);
+        var hadLi = this.el.children;
+        if (!hadLi.length) {
+          this.el.appendChild(li);
+        } else {
+          this.el.insertBefore(li, hadLi[0]);
+        }
+      },
+      removeItem: function (li) {
+        this.el.removeChild(li);
+      },
+      bindEvent: function () {
+        var input = document.querySelector('#todo-input');
+        document.addEventListener('keydown', function (e) {
+          if (e.keyCode == 13) {
+            this.addItem(input.value);
+          }
+        }.bind(this))
+        // 删除事件
+        this.el.addEventListener('click', function (e) {
+          if (e.target.className == 'delete') {
+            this.removeItem(e.target.parentNode);
+          }
+        }.bind(this), false);
+      }
+    }
+    var todo = new Todo('todos');
+    todo.bindEvent();
+  </script>
+</body>
+
+</html>
