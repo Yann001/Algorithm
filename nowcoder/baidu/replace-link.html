@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="jsContainer">
+    这里会给出一段随机文本，可能包含一些链接，比如https://www.baidu.com，或者 www.baidu.com?from=onlineExam，如果出现链接文本，请给该链接文本加上链接标签，用户点击后能直接在新窗口中打开该链接。
+  </div>
+  <script>
+    function link() {
+      var container = document.querySelector('#jsContainer');
+      var str = container.innerText;
+      var matches = str.match(/((http)s?(:\/\/)?|(www.))[\.a-zA-Z0-9]*(\?[=a-zA-Z0-9]*)*/ig);
+      matches.forEach(function (item) {
+        if (!item.indexOf('www')) {
+          var tpl = '<a href="http://' + item + '" target="_blank">' + item + '</a>'
+          str = str.replace(item, tpl);
+        } else {
+          var tpl = '<a href="' + item + '" target="_blank">' + item + '</a>'
+          str = str.replace(item, tpl);
+        }
+      })
+      container.innerHTML = str;
+    }
+    link();
+    function add(str) {
+      var
+        len = str.length,
+        lLen = 0,
+        rLen = 0,
+        res = [];
+      for (var i = 0; i < len; i++) {
+        if (str[i] == '[') {
+          lLen++;
+        } else {
+          rLen++;
+        }
+        res.push(str[i]);
+        if (str[i] == ']' && rLen > lLen) {
+          res.unshift('[');
+          lLen++;
+        }
+      }
+      lLen = 0, rLen = 0;
+      for (var i = 0, lenr = res.length; i < lenr; i++) {
+        if (res[i] == '[') {
+          lLen++;
+        } else {
+          rLen++;
+        }
+      }
+      for (var j = lLen - rLen; j > 0; j--) {
+        res.push(']');
+      }
+      return res.join('');
+    }
+    console.log(add(']['));
+    console.log(add('][[]'));
+    console.log(add('[]'));
+    console.log(add('[['));
+    console.log(add(']]]'));
+    console.log(add('[]]]]'));
+  </script>
+</body>
+
+</html>
