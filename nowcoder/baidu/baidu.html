@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>百度真题</title>
+  <style>
+    /* #demo {
+      width: 100px;
+      height: 100px;
+      background-color: #fff;
+      border: 2px solid #000;
+      position: relative;
+      z-index: 0;
+    }
+
+    #demo::before {
+      content: "";
+      width: 14.14px;
+      height: 14.14px;
+      ;
+      position: absolute;
+      top: 30px;
+      right: -10px;
+      border: 2px solid #000;
+      transform: rotate(45deg);
+      z-index: 0;
+    }
+
+    #demo::after {
+      content: "";
+      width: 14.14px;
+      height: 14.14px;
+      ;
+      position: absolute;
+      top: 30px;
+      right: -10px;
+      border: 2px solid #fff;
+      transform: rotate(45deg) translate(-2px, 2px);
+      background-color: #fff;
+      z-index: 1;
+    } */
+    #demo {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    position: relative;
+    border: 2px solid #333;
+}
+ 
+#demo:after, #demo:before {
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    left: 100%;
+    position: absolute;
+    width: 0;
+}
+ 
+#demo:after {
+    border-width: 10px;
+    border-left-color: #fff;
+    top: 20px;
+}
+ 
+#demo:before {
+    border-width: 12px;
+    border-left-color: #000;
+    top: 18px;
+}
+  </style>
+  <style>
+    .table {
+      border-collapse: collapse;
+    }
+
+    .table tr td {
+      width: 80px;
+      height: 30px;
+      border: 1px solid #000;
+    }
+
+    .header {
+      background-color: grey;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo"></div>
+  <table id="property" class="table">
+    <tbody>
+      <tr class="header">
+        <td id="name">姓名</td>
+        <td id="power">力量</td>
+        <td id="smart">明捷</td>
+        <td id="intelligence">智力</td>
+      </tr>
+      <tr>
+        <td>德鲁伊</td>
+        <td>17</td>
+        <td>24</td>
+        <td>13</td>
+      </tr>
+      <tr>
+        <td>月之骑士</td>
+        <td>15</td>
+        <td>22</td>
+        <td>16</td>
+      </tr>
+      <tr>
+        <td>众神之王</td>
+        <td>19</td>
+        <td>15</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>流浪剑客</td>
+        <td>23</td>
+        <td>15</td>
+        <td>14</td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    var
+      table = document.querySelector('#property'),
+      trs = table.querySelectorAll('tr'),
+      th = trs[0],
+      datas = [];
+    for (var i = 1, len = trs.length; i < len; i++) {
+      datas.push(getTrData(trs[i]));
+    }
+    th.addEventListener('click', function (e) {
+      var key = e.target.id;
+      if (key == 'name') {
+        if (getTrData(trs[1])[key].localeCompare(getTrData(trs[trs.length - 1])[key]) > 0) {
+          var temp = ascending(datas, key);
+          for (var i = 1, len = trs.length; i < len; i++) {
+            setTrData(trs[i], temp[i - 1]);
+          }
+        } else {
+          var temp = descending(datas, key);
+          for (var i = 1, len = trs.length; i < len; i++) {
+            setTrData(trs[i], temp[i - 1]);
+          }
+        }
+      } else {
+        if (getTrData(trs[1])[key] > getTrData(trs[trs.length - 1])[key]) {
+          var temp = ascending(datas, key);
+          for (var i = 1, len = trs.length; i < len; i++) {
+            setTrData(trs[i], temp[i - 1]);
+          }
+        } else {
+          var temp = descending(datas, key);
+          for (var i = 1, len = trs.length; i < len; i++) {
+            setTrData(trs[i], temp[i - 1]);
+          }
+        }
+      }
+    }, false);
+    function getTrData(tr) {
+      var tds = tr.querySelectorAll('td');
+      return {
+        name: tds[0].textContent,
+        power: parseInt(tds[1].textContent),
+        smart: parseInt(tds[2].textContent),
+        intelligence: parseInt(tds[3].textContent)
+      }
+    }
+    function setTrData(tr, data) {
+      var tds = tr.querySelectorAll('td');
+      tds[0].textContent = data.name;
+      tds[1].textContent = data.power;
+      tds[2].textContent = data.smart;
+      tds[3].textContent = data.intelligence;
+    }
+    function ascending(arr, key) {
+      if (key == 'name') {
+        return arr.sort(function (a, b) {
+          return a[key].localeCompare(b[key]);
+        });
+      } else {
+        return arr.sort(function (a, b) {
+          return a[key] - b[key];
+        });
+      }
+    }
+    function descending(arr, key) {
+      if (key == 'name') {
+        return arr.sort(function (a, b) {
+          return b[key].localeCompare(a[key]);
+        });
+      } else {
+        return arr.sort(function (a, b) {
+          return b[key] - a[key];
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>
