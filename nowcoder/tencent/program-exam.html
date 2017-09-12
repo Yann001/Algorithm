@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>腾讯2017实习生笔试编程题</title>
+</head>
+<body>
+  <script>
+    // 删除最少字符变回文
+    function deleteMinToPalindrome (str) {
+      var
+        len = str.length,
+        dp = [];
+      if (len < 2) {
+        return 0;
+      }
+      // 初始化(len-1) * len的矩阵
+      for (var i = 0; i < len - 1; i++) {
+        var temp = [];
+        for (var j = 0; j < len; j++) {
+          temp[j] = 0;
+        }
+        dp.push(temp);
+      }
+      for (var j = 1; j < len; j++) {
+        // i~j只包含2个字符串
+        dp[j - 1][j] = str[j] == str[j - 1] ? 0 : 1;
+        // i~j大于2个字符串
+        for (var i = j - 2; i >= 0; i--) {
+          if (str[i] == str[j]) {
+            dp[i][j] = dp[i + 1][j - 1];
+          } else {
+            dp[i][j] = Math.min(dp[i + 1][j], dp[i][j -1]) + 1;
+          }
+        }
+      }
+      return dp[0][len - 1];
+    }
+    // var test = 'zgtklhfzomzjckwmluvivvcmhjrwkuvcjrxojobpdedpamdshcwwsetfbacvonecrdvugeibglvhxuymjvoryqjwullvzglqazxrdmczyvbgakjagttrezmvrlptiwoqkrtxuroeqmryzsgokopxxdpbejmtwvpnaqrgqladdszhdwxfckmewhdvihgvacueqhvwvjxoitlpfrckxkuksaqzjpwgoldyhugsacflcdqhifldoaphgdbhaciixouavqxwlghadmfortqacbffqzocinvuqpjthgekunjsstukeiffjipzzabkuiueqnjgkuiojwbjzfynafnlcaryygqjfixaoeowhkxkbsnpsvnbxuywfxbnuoemxynbtgkqtjvzqikbafjnpbeirxxrohhnjqrbqqzercqcrcswojyylunuevtdhamlkzqnjrzibwckbkiygysuaxpjrgjmurrohkhvjpmwmmtpcszpihcntyivrjplhyrqftghglkvqeidyhtmrlcljngeyaefxnywpfsualufjwnffyqnpitgkkyrbwccqggycrvoocbwsdbftkigrkcbojuwwctknzzmvhbhbfzrqwzllulbabztqnznkqdyoqnrxhwavqhzyzvmmmphzxbikpharseywpfsqyybkynwbdrgfsaxduxojcdqcjuaywzbvdjgjqtoffasiuhvxcaockebkuxpiomqmtvsqhnyxfjceqevqvnapbk';
+    // console.log(deleteMinToPalindrome('abca'));
+    // console.log(deleteMinToPalindrome(test));
+    // 大写字母移到最后顺序不变
+    function moveCapital (str) {
+      var
+        len = str.length;
+      for (var i = 0; i < len; i++) {
+        if (str[i].charCodeAt(0) >= 65 && str[i].charCodeAt() <= 90) {
+          
+        }
+      }
+    }
+    // 数组中两个数的差最小（最大）的对数
+    function pair (array) {
+      var arr = array.sort(function (a, b) {
+        return a - b;
+      });
+      var
+        len = arr.length,
+        min = Infinity,
+        max = -Infinity,
+        minCount = 1,
+        maxCount = 1;
+      for (var i = 1; i < len; i++) {
+        if (arr[i] - arr[i - 1] < min) {
+          minCount = 1;
+          min = arr[i] - arr[i - 1];
+        } else if (arr[i] - arr[i - 1] == min) {
+          minCount++
+        }
+      }
+      for (var j = len - 1; j >= 0; j--) {
+        if (arr[j] == arr[j-1]) {
+          maxCount++;
+        } else {
+          break;
+        }
+      }
+      return [minCount, maxCount]
+    }
+  </script>
+</body>
+</html>
