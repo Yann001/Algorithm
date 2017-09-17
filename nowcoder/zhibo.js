@@ -331,7 +331,7 @@ define(function () {
         i = 0,
         j = len - 1,
         resl = 0,
-        resr = len - 1;
+        resr = len + dp[0][str.length - 1] - 1;
       while (i <= j) {
         if (str[i] == str[j]) {
           res[resl++] = str[i++];
@@ -344,7 +344,8 @@ define(function () {
           res[resr--] = str[i++];
         }
       }
-      return res.join('');
+      // return res.join('');
+      return res;
     }
   }
   /**

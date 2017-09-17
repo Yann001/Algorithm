@@ -61,20 +61,29 @@
       // console.log(zhibo.LIS.dynamicProgram(test1));
       
       // 添加最少字符使其变成回文
-      // var test1 = 'abac';
-      // var test2 = 'ab';
-      // var test3 = 'aba';
-      // console.log(zhibo.addSomeBecomePalindrome(test1));
-      // console.log(zhibo.addSomeBecomePalindrome(test2));
-      // console.log(zhibo.addSomeBecomePalindrome(test3));
+      var test1 = 'abac';
+      var test2 = 'ab';
+      var test3 = 'aba';
+      var test4 = [51,23,52,97,97,76,23,51];
+      var test5 = [1,1,100,2];
+      console.log(zhibo.addSomeBecomePalindrome(test1));
+      console.log(zhibo.addSomeBecomePalindrome(test2));
+      console.log(zhibo.addSomeBecomePalindrome(test3));
+      console.log(zhibo.addSomeBecomePalindrome(test5));
+      var res = zhibo.addSomeBecomePalindrome(test4);
+      console.log(res);
+      var sum = res.reduce(function (a, b) {
+        return a + b;
+      })
+      console.log(sum);
       
       // 最长无重复字符串为题
       // var test1 = 'aabccabcd';
       // console.log(zhibo.maxUniqueStr(test1));
 
       // 字符串切割成回文子串问题
-      var test1 = 'acdcdcdad';
-      console.log(zhibo.minCutBecomePalindrome(test1));
+      // var test1 = 'acdcdcdad';
+      // console.log(zhibo.minCutBecomePalindrome(test1));
     })
   </script>
 </body>
