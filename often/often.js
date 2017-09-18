@@ -279,7 +279,7 @@ define(function () {
     } else {
       return a;
     }
-  }
+  };
 
   var greedyActivitySelector = function (s, f) {
     var n = s.length;
@@ -292,7 +292,7 @@ define(function () {
       }
     }
     return a;
-  }
+  };
 
   var factorial = function (n) {
     var ret = 1
@@ -300,7 +300,7 @@ define(function () {
       ret *= i;
     }
     return ret.toString();
-  }
+  };
 
   var selection = function (array, k) {
     var arr = array.slice();
@@ -324,6 +324,89 @@ define(function () {
     return arr[k - 1];
   };
 
+  function getType (x) {
+    var type = Object.prototype.toString.call(x);
+    switch(type) {
+      case '[object Number]': return 'number';
+      case '[object String]': return 'string';
+      case '[object Array]': return 'array';
+      case '[object Undefined]': return 'undefined';
+      case '[object Null]': return 'null';
+      case '[object Symbol]': return 'symbol';
+    }
+  }
+  var uniqueArr = function (arr) {
+    var len = arr.length;
+    for (var i = 0; i < len; i++)  {
+      var type = getType(arr[i]);
+      switch (type) {
+        case 'string':
+        case 'number':
+        case 'array':
+        case 'object':
+        case 'null':
+        case 'undefined': 
+      }
+    }
+    function isContains () {
+      
+    }
+  }
+  var unique = function (arr) {
+    var
+      map = {},
+      res = [];
+    for (var i = 0, len = arr.length; i < len; i++) {
+      if (!map[arr[i]]) {
+        res.push(arr[i]);
+      } else {
+        map[arr[i]] = 1;
+      }
+    }
+    return res;
+  }
+  /**
+   * @desc 将给定字符串中的字母排序，非字母放到最后
+   * @example 如将 'c.0C/B3b,A22a' 排序后变成 'AaBbCc.0/3,22'
+   * @param {String} str 输入字符串
+   * @return {String} 给定规则排序后的字符串
+   */
+  var letterSort = function (str) {
+    var
+      len = str.length,
+      letter = [],
+      notLetter = [];
+    // 遍历一遍分开字母与非字母
+    for (var i = 0; i < len; i++) {
+      if (/[a-zA-Z]/.test(str[i])) {
+        letter.push(str[i]);
+      } else {
+        notLetter.push(str[i]);
+      }
+    }
+    // 纯字母进行排序
+    letter.sort(function (a, b) {
+      if ((a.toUpperCase() === a && b.toUpperCase() === b) ||
+          (a.toLowerCase() === a && b.toLowerCase() === b) ) { // 同为大写字母或小写字母
+            return a.charCodeAt() - b.charCodeAt();
+          } else { // 字母一个大写一个小写
+            // return a.toLowerCase().charCodeAt() - b.toLowerCase().charCodeAt();
+            // 注意这里不能直接向上面这样写，上面基本也可实现，只是对于Aa,Bb,aA,bB这种组合会保持原来的顺序，
+            // 因为上面这句返回值为0，即把两个值当成了相等，而其实这种情况也是有先后顺序的，比如相同字母大写在前。
+            // 所以讲等于0的情况区分
+            if (a.toLowerCase().charCodeAt() - b.toLowerCase().charCodeAt() > 0) {
+              return 1;
+            } else if (a.toLowerCase().charCodeAt() - b.toLowerCase().charCodeAt() == 0) {
+              return a.charCodeAt() - b.charCodeAt();
+            } else {
+              return -1;
+            }
+          }
+    })
+    // 返回组合后的字符串
+    return letter.concat(notLetter).join('');
+  }
+
   return {
     findMaxSumSubArr1,
     findMaxSumSubArr2,
@@ -334,7 +417,8 @@ define(function () {
     recursionActivitySelector,
     greedyActivitySelector,
     factorial,
-    selection
+    selection,
+    letterSort
   }
 })
 
