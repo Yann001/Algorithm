@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    String.prototype.getSuffixList = function (suffix) {
+      //TODO：编写代码逻辑 ，不使用正则
+      //输出结果
+      var
+        arr = this.split(' '),
+        len = arr.length,
+        suffixLen = suffix.length,
+        map = {},
+        temp = [],
+        result = '';
+      for (var i = 0; i < len; i++) {
+        if (arr[i].length >= suffixLen && arr[i].lastIndexOf(suffix) == arr[i].length - suffixLen) {
+          if (!map[arr[i]]) {
+            map[arr[i]] = 1;
+          } else {
+            map[arr[i]] += 1;
+          }
+        }
+      }
+      for (var key in map) {
+        temp.push({
+          word: key,
+          count: map[key]
+        })
+      }
+      temp.sort(function (a, b) {
+        return b.count - a.count;
+      })
+      temp.forEach(function (item) {
+        result += item.word + '=' + item.count + ','
+      })
+      result = result.substring(0, result.length - 1);
+      return result;//字符串
+    };
+    console.log("be careful the drug careful is very You'd powerful better careful be careful powerful grateful".getSuffixList('ful'));
+
+
+    /**
+     * @description 迅雷前端笔试题目。
+     * 实现bind的多次绑定，即最后调用bind的函数时this为最后绑定的this。
+     * 如下给定的例子中，原生实现输出bar1，你应该输出bar3。
+     */
+    Function.prototype.bind = function () {
+      // 这里写代码
+      
+    }
+
+    function foo () {
+      return this.bar;
+    }
+
+    foo = foo.bind({bar: 'bar1'});
+    foo = foo.bind({bar: 'bar2'});
+    foo = foo.bind({bar: 'bar3'});
+
+    console.log(foo()); // bar1
+
+
+  </script>
+</body>
+
+</html>
