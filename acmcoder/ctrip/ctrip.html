@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2017携程秋招笔试题</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * @description 二叉树先序遍历
+     */
+    function preOrder(tree) {
+      var
+        j = 0,
+        res = [];
+      traversal(tree, 0);
+      return res.join(',');
+      function traversal(tree, i) {
+        if (i < tree.length) {
+          res[j++] = tree[i];
+          traversal(tree, left(i));
+          traversal(tree, right(i))
+        } else {
+          return res;
+        }
+      }
+      function left(i) {
+        return 2 * i + 1;
+      }
+      function right(i) {
+        return 2 * i + 2;
+      }
+    }
+    console.log(preOrder('A,B,C,D,E,F,G,H,I,J,K'.split(',')))
+  </script>
+  <script>
+    /**
+     * @description JSON字符串中的key首字母大写
+     */
+    function toUpperCase(data) {
+      if (getType(data) == 'object') {
+          for (var key in data) {
+            if (getType(data[key]) == 'object') {
+              toUpperCase(data[key]);
+            }
+            var newKey = key[0].toUpperCase() + key.substr(1);
+            data[newKey] = data[key];
+            delete data[key];
+          }
+      }
+      return JSON.stringify(data);
+      function getType(x) {
+        var type = Object.prototype.toString.call(x);
+        switch (type) {
+          case '[object Number]': return 'number';
+          case '[object String]': return 'string';
+          case '[object Array]': return 'array';
+          case '[object Undefined]': return 'undefined';
+          case '[object Null]': return 'null';
+          case '[object Symbol]': return 'symbol';
+          case '[object Object]': return 'object';
+        }
+      }
+    }
+    console.log(toUpperCase(JSON.parse('"abc"')));
+    console.log(toUpperCase(JSON.parse('123')));
+    console.log(toUpperCase(JSON.parse('[1,2,3]')));
+    console.log(toUpperCase(JSON.parse('{"myKey":"myValue","abc":"abc","obj":{"key":"value"}}')));
+    console.log(toUpperCase(JSON.parse('null')));
+  </script>
+</body>
+
+</html>

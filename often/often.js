@@ -333,6 +333,7 @@ define(function () {
       case '[object Undefined]': return 'undefined';
       case '[object Null]': return 'null';
       case '[object Symbol]': return 'symbol';
+      case '[object Object]': return 'object';
     }
   }
   var uniqueArr = function (arr) {

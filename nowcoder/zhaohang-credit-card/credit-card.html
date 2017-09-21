@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function greedy (arr) {
+      arr.sort(function (a, b) {
+        return a.end - b.end;
+      });
+      var
+        len = arr.length,
+        res = 1;
+      for (var i = 1; i < len; i++) {
+        if (arr[i].start < arr[i - 1].start) {
+          res
+        }
+      }
+    }
+  </script>
+</body>
+</html>
